@@ -1,8 +1,21 @@
-export default function DashboardPage() {
+import { createClient } from "@/lib/supabase/server";
+import DashboardClient from "@/components/dashboard/DashboardClient";
+
+export default async function DashboardPage() {
+  const supabase = await createClient();
+
+  const [{ data: invoices }, { data: proposals }] = await Promise.all([
+    supabase
+      .from("invoices")
+      .select("*")
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("proposals")
+      .select("*")
+      .order("created_at", { ascending: false }),
+  ]);
+
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-      <p className="text-slate-400 mt-2">Welcome to Invoxa.</p>
-    </div>
+    <DashboardClient invoices={invoices ?? []} proposals={proposals ?? []} />
   );
 }
