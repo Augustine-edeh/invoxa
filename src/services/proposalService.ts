@@ -30,9 +30,16 @@ export const proposalService = {
   async create(input: CreateProposalInput): Promise<Proposal> {
     const supabase = createClient();
 
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) throw new Error("Not authenticated");
+
     const { data, error } = await supabase
       .from("proposals")
-      .insert(input)
+      .insert({ ...input, user_id: user.id })
       .select()
       .single();
 
