@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { createClient } from "@/lib/supabase/client"
-import { toast } from "sonner"
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 import {
   LayoutDashboard,
   FileText,
@@ -12,16 +12,16 @@ import {
   LogOut,
   Menu,
   X,
-} from "lucide-react"
-import { useState } from "react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+} from "lucide-react";
+import { useState } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 
 const navItems = [
   {
@@ -30,41 +30,39 @@ const navItems = [
     icon: LayoutDashboard,
   },
   {
-    label: "Invoices",
+    label: "New invoice",
     href: "/dashboard/invoice/new",
     icon: FileText,
   },
   {
-    label: "Proposals",
+    label: "New proposal",
     href: "/dashboard/proposal/new",
     icon: FilePen,
   },
-]
+];
 
 type SidebarProps = {
-  email: string
-}
+  email: string;
+};
 
 export default function Sidebar({ email }: SidebarProps) {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const pathname = usePathname();
+  const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleSignOut = async () => {
-    const supabase = createClient()
-    const { error } = await supabase.auth.signOut()
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
 
     if (error) {
-      toast.error("Failed to sign out")
-      return
+      toast.error("Failed to sign out");
+      return;
     }
 
-    router.push("/login")
-  }
+    router.push("/login");
+  };
 
-  const initials = email
-    ? email.slice(0, 2).toUpperCase()
-    : "IN"
+  const initials = email ? email.slice(0, 2).toUpperCase() : "IN";
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -81,8 +79,8 @@ export default function Sidebar({ email }: SidebarProps) {
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => {
-          const Icon = item.icon
-          const isActive = pathname === item.href
+          const Icon = item.icon;
+          const isActive = pathname === item.href;
 
           return (
             <Link
@@ -93,13 +91,13 @@ export default function Sidebar({ email }: SidebarProps) {
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                 isActive
                   ? "bg-amber-400/10 text-amber-400"
-                  : "text-slate-400 hover:text-white hover:bg-slate-800"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800",
               )}
             >
               <Icon size={18} />
               {item.label}
             </Link>
-          )
+          );
         })}
       </nav>
 
@@ -134,7 +132,7 @@ export default function Sidebar({ email }: SidebarProps) {
         </DropdownMenu>
       </div>
     </div>
-  )
+  );
 
   return (
     <>
@@ -165,5 +163,5 @@ export default function Sidebar({ email }: SidebarProps) {
         </div>
       )}
     </>
-  )
+  );
 }
