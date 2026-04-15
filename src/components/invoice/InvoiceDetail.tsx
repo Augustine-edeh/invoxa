@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { CheckCircle, Send, Trash2, Clock, AlertCircle } from "lucide-react";
+import PDFDownloadButton from "@/components/pdf/PDFDownloadButton";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-slate-700 text-slate-300",
@@ -66,6 +67,11 @@ export default function InvoiceDetail({ invoice }: Props) {
           <p className="text-amber-400 font-bold text-2xl">
             ₦{invoice.total.toLocaleString()}
           </p>
+        </div>
+
+        {/* PDF Download */}
+        <div className="flex justify-end">
+          <PDFDownloadButton invoice={invoice} />
         </div>
 
         <Separator className="bg-slate-800" />
