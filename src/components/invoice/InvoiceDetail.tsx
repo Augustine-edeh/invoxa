@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Invoice } from "@/types/invoice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,14 @@ import { useUpdateInvoiceStatus, useDeleteInvoice } from "@/hooks/useInvoices";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { CheckCircle, Send, Trash2, Clock, AlertCircle } from "lucide-react";
+import {
+  CheckCircle,
+  Send,
+  Trash2,
+  Clock,
+  AlertCircle,
+  Mail,
+} from "lucide-react";
 import PDFDownloadButton from "@/components/pdf/PDFDownloadButton";
 
 const statusStyles: Record<string, string> = {
@@ -23,6 +31,33 @@ type Props = {
 };
 
 export default function InvoiceDetail({ invoice }: Props) {
+  const [isSending, setIsSending] = useState(false);
+
+  const handleSendEmail = async () => {
+    if (!confirm(`Send invoice to ${invoice.client_email}?`)) return;
+
+    setIsSending(true);
+
+    try {
+      const res = await fetch("/api/send-invoice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ invoiceId: invoice.id }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error);
+
+      toast.success(`Invoice sent to ${invoice.client_email}`);
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message ?? "Failed to send email");
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   const router = useRouter();
   const { mutateAsync: updateStatus, isPending: isUpdating } =
     useUpdateInvoiceStatus();
@@ -69,8 +104,18 @@ export default function InvoiceDetail({ invoice }: Props) {
           </p>
         </div>
 
-        {/* PDF Download */}
-        <div className="flex justify-end">
+        {/* Actions */}
+        <div className="flex justify-end gap-2">
+          <Button
+            size="sm"
+            onClick={handleSendEmail}
+            disabled={isSending}
+            variant="outline"
+            className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+          >
+            <Mail size={14} className="mr-2" />
+            {isSending ? "Sending..." : "Email to client"}
+          </Button>
           <PDFDownloadButton invoice={invoice} />
         </div>
 
