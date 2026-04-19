@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Invoice } from "@/types/invoice";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +17,7 @@ import {
   Clock,
   AlertCircle,
   Mail,
+  Edit,
 } from "lucide-react";
 import PDFDownloadButton from "@/components/pdf/PDFDownloadButton";
 
@@ -106,6 +108,16 @@ export default function InvoiceDetail({ invoice }: Props) {
 
         {/* Actions */}
         <div className="flex justify-end gap-2">
+          <Link href={`/dashboard/invoice/${invoice.id}/edit`}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+            >
+              <Edit size={14} className="mr-2" />
+              Edit
+            </Button>
+          </Link>
           <Button
             size="sm"
             onClick={handleSendEmail}
