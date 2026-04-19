@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Proposal } from "@/types/proposal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,8 @@ import {
 } from "@/hooks/useProposals";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { CheckCircle, Send, Trash2, XCircle, Clock } from "lucide-react";
+import { CheckCircle, Send, Trash2, XCircle, Clock, Edit } from "lucide-react";
+import ProposalPDFDownloadButton from "@/components/pdf/ProposalPDFDownloadButton";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-slate-700 text-slate-300",
@@ -70,9 +72,24 @@ export default function ProposalDetail({ proposal }: Props) {
           </p>
         </div>
 
+        {/* PDF Download */}
+        <div className="flex justify-end">
+          <ProposalPDFDownloadButton proposal={proposal} />
+        </div>
+
         <Separator className="bg-slate-800" />
 
         <div className="flex flex-wrap gap-2">
+          <Link href={`/dashboard/proposal/${proposal.id}/edit`}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+            >
+              <Edit size={14} className="mr-2" />
+              Edit
+            </Button>
+          </Link>
           {proposal.status !== "sent" && (
             <Button
               size="sm"

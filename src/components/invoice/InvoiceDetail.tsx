@@ -19,7 +19,7 @@ import {
   Mail,
   Edit,
 } from "lucide-react";
-import PDFDownloadButton from "@/components/pdf/PDFDownloadButton";
+import InvoicePDFDownloadButton from "@/components/pdf/InvoicePDFDownloadButton";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-slate-700 text-slate-300",
@@ -128,7 +128,7 @@ export default function InvoiceDetail({ invoice }: Props) {
             <Mail size={14} className="mr-2" />
             {isSending ? "Sending..." : "Email to client"}
           </Button>
-          <PDFDownloadButton invoice={invoice} />
+          <InvoicePDFDownloadButton invoice={invoice} />
         </div>
 
         <Separator className="bg-slate-800" />

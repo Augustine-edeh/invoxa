@@ -10,7 +10,7 @@ type Props = {
   invoice: Invoice;
 };
 
-export default function PDFDownloadButton({ invoice }: Props) {
+export default function InvoicePDFDownloadButton({ invoice }: Props) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleDownload = async () => {
