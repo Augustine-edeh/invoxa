@@ -137,27 +137,47 @@ export default function Sidebar({ email }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-slate-900 border-r border-slate-800 h-screen sticky top-0">
+      <aside className="hidden md:flex flex-col w-64 bg-slate-900 border-r border-slate-800 min-h-screen sticky top-0 shrink-0">
         <SidebarContent />
       </aside>
 
-      {/* Mobile top bar */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
+      {/* Mobile header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex flex-row-reverse items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
         <h1 className="text-xl font-bold text-white">
           Inv<span className="text-amber-400">ox</span>a
         </h1>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-slate-400 hover:text-white"
+          className="text-slate-400 hover:text-white p-1"
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile top padding so content doesn't hide behind fixed header */}
+      <div className="md:hidden h-[52px] shrink-0" />
+
+      {/* Mobile drawer overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-50 bg-slate-950/80">
-          <div className="w-64 h-full bg-slate-900 border-r border-slate-800">
+        <div
+          className="md:hidden fixed inset-0 z-50 bg-slate-950/80"
+          onClick={() => setMobileOpen(false)}
+        >
+          <div
+            className="w-72 h-full bg-slate-900 border-r border-slate-800"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
+              <h1 className="text-xl font-bold text-white">
+                Inv<span className="text-amber-400">ox</span>a
+              </h1>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+            </div>
             <SidebarContent />
           </div>
         </div>

@@ -35,7 +35,7 @@ export default function DashboardClient({ invoices, proposals }: Props) {
   return (
     <div className="p-6 md:p-8 space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
           <p className="text-slate-400 text-sm mt-1">
@@ -66,28 +66,36 @@ export default function DashboardClient({ invoices, proposals }: Props) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatsCard
-          title="Total earned"
-          value={`₦${totalEarned.toLocaleString()}`}
-          sub={`${invoices.filter((i) => i.status === "paid").length} paid invoices`}
-          accent
-        />
-        <StatsCard
-          title="Pending"
-          value={`₦${totalPending.toLocaleString()}`}
-          sub={`${invoices.filter((i) => i.status === "sent").length} sent invoices`}
-        />
-        <StatsCard
-          title="Overdue"
-          value={`₦${totalOverdue.toLocaleString()}`}
-          sub={`${invoices.filter((i) => i.status === "overdue").length} overdue invoices`}
-        />
-        <StatsCard
-          title="Proposals won"
-          value={`₦${totalProposalValue.toLocaleString()}`}
-          sub={`${proposals.filter((p) => p.status === "accepted").length} accepted`}
-        />
+      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-4">
+        <div className="shrink-0 w-[200px] md:w-auto">
+          <StatsCard
+            title="Total earned"
+            value={`₦${totalEarned.toLocaleString()}`}
+            sub={`${invoices.filter((i) => i.status === "paid").length} paid invoices`}
+            accent
+          />
+        </div>
+        <div className="shrink-0 w-[200px] md:w-auto">
+          <StatsCard
+            title="Pending"
+            value={`₦${totalPending.toLocaleString()}`}
+            sub={`${invoices.filter((i) => i.status === "sent").length} sent invoices`}
+          />
+        </div>
+        <div className="shrink-0 w-[200px] md:w-auto">
+          <StatsCard
+            title="Overdue"
+            value={`₦${totalOverdue.toLocaleString()}`}
+            sub={`${invoices.filter((i) => i.status === "overdue").length} overdue invoices`}
+          />
+        </div>
+        <div className="shrink-0 w-[200px] md:w-auto">
+          <StatsCard
+            title="Proposals won"
+            value={`₦${totalProposalValue.toLocaleString()}`}
+            sub={`${proposals.filter((p) => p.status === "accepted").length} accepted`}
+          />
+        </div>
       </div>
 
       {/* Tables */}
