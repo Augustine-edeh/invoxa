@@ -4,7 +4,7 @@ import { Invoice } from "@/types/invoice";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { FileText, ChevronRight } from "lucide-react";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-slate-700 text-slate-300 hover:bg-slate-700",
@@ -37,59 +37,96 @@ export default function InvoiceTable({ invoices }: Props) {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-slate-800">
-            <th className="text-left text-slate-500 font-medium pb-3 pr-4">
-              Invoice
-            </th>
-            <th className="text-left text-slate-500 font-medium pb-3 pr-4">
-              Client
-            </th>
-            <th className="text-left text-slate-500 font-medium pb-3 pr-4">
-              Due date
-            </th>
-            <th className="text-right text-slate-500 font-medium pb-3 pr-4">
-              Amount
-            </th>
-            <th className="text-left text-slate-500 font-medium pb-3">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-800/50">
-          {invoices.map((invoice) => (
-            <tr
-              key={invoice.id}
-              className="hover:bg-slate-800/30 transition-colors group"
-            >
-              <td className="py-3 pr-4">
-                <Link
-                  href={`/dashboard/invoice/${invoice.id}`}
-                  className="text-white font-medium group-hover:text-amber-400 transition-colors"
-                >
+    <>
+      {/* Desktop table */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-800">
+              <th className="text-left text-slate-500 font-medium pb-3 pr-4">
+                Invoice
+              </th>
+              <th className="text-left text-slate-500 font-medium pb-3 pr-4">
+                Client
+              </th>
+              <th className="text-left text-slate-500 font-medium pb-3 pr-4">
+                Due date
+              </th>
+              <th className="text-right text-slate-500 font-medium pb-3 pr-4">
+                Amount
+              </th>
+              <th className="text-left text-slate-500 font-medium pb-3">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-800/50">
+            {invoices.map((invoice) => (
+              <tr
+                key={invoice.id}
+                className="hover:bg-slate-800/30 transition-colors group"
+              >
+                <td className="py-3 pr-4">
+                  <Link
+                    href={`/dashboard/invoice/${invoice.id}`}
+                    className="text-white font-medium group-hover:text-amber-400 transition-colors"
+                  >
+                    #{invoice.invoice_number}
+                  </Link>
+                </td>
+                <td className="py-3 pr-4 text-slate-300">
+                  {invoice.client_name}
+                </td>
+                <td className="py-3 pr-4 text-slate-400">
+                  {format(new Date(invoice.due_date), "MMM d, yyyy")}
+                </td>
+                <td className="py-3 pr-4 text-right text-white font-medium">
+                  ₦{invoice.total.toLocaleString()}
+                </td>
+                <td className="py-3">
+                  <Badge className={statusStyles[invoice.status]}>
+                    {invoice.status}
+                  </Badge>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile card list */}
+      <div className="md:hidden space-y-2">
+        {invoices.map((invoice) => (
+          <Link
+            key={invoice.id}
+            href={`/dashboard/invoice/${invoice.id}`}
+            className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors"
+          >
+            <div className="space-y-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-white font-medium text-sm">
                   #{invoice.invoice_number}
-                </Link>
-              </td>
-              <td className="py-3 pr-4 text-slate-300">
-                {invoice.client_name}
-              </td>
-              <td className="py-3 pr-4 text-slate-400">
-                {format(new Date(invoice.due_date), "MMM d, yyyy")}
-              </td>
-              <td className="py-3 pr-4 text-right text-white font-medium">
-                ₦{invoice.total.toLocaleString()}
-              </td>
-              <td className="py-3">
+                </span>
                 <Badge className={statusStyles[invoice.status]}>
                   {invoice.status}
                 </Badge>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+              </div>
+              <p className="text-slate-400 text-xs truncate">
+                {invoice.client_name}
+              </p>
+              <p className="text-slate-500 text-xs">
+                Due {format(new Date(invoice.due_date), "MMM d, yyyy")}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0 ml-4">
+              <span className="text-amber-400 font-semibold text-sm">
+                ₦{invoice.total.toLocaleString()}
+              </span>
+              <ChevronRight size={16} className="text-slate-600" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }
