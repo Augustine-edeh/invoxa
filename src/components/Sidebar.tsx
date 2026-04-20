@@ -10,8 +10,9 @@ import {
   FileText,
   FilePen,
   LogOut,
-  Menu,
-  X,
+  Plus,
+  Settings,
+  Users,
 } from "lucide-react";
 import { useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -30,14 +31,47 @@ const navItems = [
     icon: LayoutDashboard,
   },
   {
-    label: "New invoice",
+    label: "Invoices",
     href: "/dashboard/invoice/new",
     icon: FileText,
   },
   {
-    label: "New proposal",
+    label: "Proposals",
     href: "/dashboard/proposal/new",
     icon: FilePen,
+  },
+  {
+    label: "Clients",
+    href: "/dashboard/clients",
+    icon: Users,
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/settings",
+    icon: Settings,
+  },
+];
+
+const bottomNavItems = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "Invoices",
+    href: "/dashboard/invoice/new",
+    icon: FileText,
+  },
+  {
+    label: "Proposals",
+    href: "/dashboard/proposal/new",
+    icon: FilePen,
+  },
+  {
+    label: "Clients",
+    href: "/dashboard/clients",
+    icon: Users,
   },
 ];
 
@@ -48,7 +82,7 @@ type SidebarProps = {
 export default function Sidebar({ email }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [fabOpen, setFabOpen] = useState(false);
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -86,7 +120,6 @@ export default function Sidebar({ email }: SidebarProps) {
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setMobileOpen(false)}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                 isActive
@@ -141,47 +174,98 @@ export default function Sidebar({ email }: SidebarProps) {
         <SidebarContent />
       </aside>
 
-      {/* Mobile header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex flex-row-reverse items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
+      {/* Mobile top bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
         <h1 className="text-xl font-bold text-white">
           Inv<span className="text-amber-400">ox</span>a
         </h1>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button>
+              <Avatar className="h-8 w-8">
+                <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="w-48 bg-slate-800 border-slate-700"
+          >
+            <DropdownMenuItem
+              onClick={handleSignOut}
+              className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+            >
+              <LogOut size={14} className="mr-2" />
+              Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* Mobile top padding */}
+      <div className="md:hidden h-[52px] shrink-0" />
+
+      {/* Mobile FAB */}
+      <div className="md:hidden fixed bottom-20 right-4 z-50">
+        {fabOpen && (
+          <div className="absolute bottom-16 right-0 space-y-2 flex flex-col items-end">
+            <Link
+              href="/dashboard/invoice/new"
+              onClick={() => setFabOpen(false)}
+              className="flex items-center gap-2 bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
+            >
+              <FileText size={15} className="text-amber-400" />
+              New invoice
+            </Link>
+            <Link
+              href="/dashboard/proposal/new"
+              onClick={() => setFabOpen(false)}
+              className="flex items-center gap-2 bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
+            >
+              <FilePen size={15} className="text-amber-400" />
+              New proposal
+            </Link>
+          </div>
+        )}
         <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-slate-400 hover:text-white p-1"
+          onClick={() => setFabOpen(!fabOpen)}
+          className={cn(
+            "w-14 h-14 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform",
+            fabOpen && "rotate-45",
+          )}
         >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          <Plus size={24} />
         </button>
       </div>
 
-      {/* Mobile top padding so content doesn't hide behind fixed header */}
-      <div className="md:hidden h-[52px] shrink-0" />
+      {/* Mobile bottom nav */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900 border-t border-slate-800">
+        <div className="flex items-center justify-around px-2 py-2">
+          {bottomNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
 
-      {/* Mobile drawer overlay */}
-      {mobileOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-50 bg-slate-950/80"
-          onClick={() => setMobileOpen(false)}
-        >
-          <div
-            className="w-72 h-full bg-slate-900 border-r border-slate-800"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
-              <h1 className="text-xl font-bold text-white">
-                Inv<span className="text-amber-400">ox</span>a
-              </h1>
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="text-slate-400 hover:text-white"
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition-colors",
+                  isActive ? "text-amber-400" : "text-slate-500",
+                )}
               >
-                <X size={20} />
-              </button>
-            </div>
-            <SidebarContent />
-          </div>
+                <Icon size={20} />
+                <span className="text-[10px] font-medium">{item.label}</span>
+              </Link>
+            );
+          })}
         </div>
-      )}
+      </div>
+
+      {/* Mobile bottom padding so content doesn't hide behind bottom nav */}
+      <div className="md:hidden h-[65px] shrink-0" />
     </>
   );
 }
