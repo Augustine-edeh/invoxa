@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import MobileLogo from "./dashboard/MobileLogo";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -141,16 +142,15 @@ export default function Sidebar({ email }: SidebarProps) {
 
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
-        <button
-          onClick={() => setDrawerOpen(true)}
-          className="text-slate-400 hover:text-white p-1"
-        >
-          <Menu size={22} />
-        </button>
-
-        <h1 className="text-xl font-bold text-white absolute left-1/2 -translate-x-1/2">
-          Inv<span className="text-amber-400">ox</span>a
-        </h1>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setDrawerOpen(true)}
+            className="text-slate-400 hover:text-white p-1"
+          >
+            <Menu size={22} />
+          </button>
+          <MobileLogo />
+        </div>
 
         <Avatar className="h-8 w-8">
           <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
@@ -174,21 +174,7 @@ export default function Sidebar({ email }: SidebarProps) {
           >
             {/* Drawer header */}
             <div className="flex items-center justify-between px-4 py-4 border-b border-slate-800">
-              <div className="flex items-center gap-3">
-                <Avatar className="h-9 w-9">
-                  <AvatarFallback className="bg-amber-400 text-slate-950 text-sm font-bold">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-white text-sm font-medium">
-                    Augustine Edeh
-                  </p>
-                  <p className="text-slate-500 text-xs truncate max-w-[160px]">
-                    {email}
-                  </p>
-                </div>
-              </div>
+              <MobileLogo />
               <button
                 onClick={() => setDrawerOpen(false)}
                 className="text-slate-400 hover:text-white"
@@ -225,20 +211,41 @@ export default function Sidebar({ email }: SidebarProps) {
 
             {/* Sign out */}
             <div className="px-3 py-4">
-              <button
-                onClick={handleSignOut}
-                className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:text-red-300 hover:bg-slate-800 transition-colors"
-              >
-                <LogOut size={18} />
-                Sign out
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+                    <Avatar className="h-7 w-7">
+                      <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
+                        {initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      {/* <p>{user.name}</p> //NOTE: add user name here later on */}
+                      <span className="flex-1 text-left truncate">{email}</span>
+                    </div>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  side="top"
+                  align="start"
+                  className="w-48 bg-slate-800 border-slate-700"
+                >
+                  <DropdownMenuItem
+                    onClick={handleSignOut}
+                    className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+                  >
+                    <LogOut size={14} className="mr-2" />
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
       )}
 
       {/* Mobile FAB */}
-      <div className="md:hidden fixed bottom-20 right-4 z-50">
+      <div className="md:hidden fixed bottom-20 right-4 z-40">
         {fabOpen && (
           <div className="absolute bottom-16 right-0 space-y-2 flex flex-col items-end">
             <Link
