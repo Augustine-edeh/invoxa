@@ -13,6 +13,8 @@ import {
   Plus,
   Settings,
   Users,
+  Menu,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -25,54 +27,22 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 const navItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Invoices",
-    href: "/dashboard/invoice/new",
-    icon: FileText,
-  },
-  {
-    label: "Proposals",
-    href: "/dashboard/proposal/new",
-    icon: FilePen,
-  },
-  {
-    label: "Clients",
-    href: "/dashboard/clients",
-    icon: Users,
-  },
-  {
-    label: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
+  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Invoices", href: "/dashboard/invoice/new", icon: FileText },
+  { label: "Proposals", href: "/dashboard/proposal/new", icon: FilePen },
+  { label: "Clients", href: "/dashboard/clients", icon: Users },
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 const bottomNavItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Invoices",
-    href: "/dashboard/invoice/new",
-    icon: FileText,
-  },
-  {
-    label: "Proposals",
-    href: "/dashboard/proposal/new",
-    icon: FilePen,
-  },
-  {
-    label: "Clients",
-    href: "/dashboard/clients",
-    icon: Users,
-  },
+  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Invoices", href: "/dashboard/invoice/new", icon: FileText },
+  { label: "Proposals", href: "/dashboard/proposal/new", icon: FilePen },
+  { label: "Clients", href: "/dashboard/clients", icon: Users },
+];
+
+const drawerItems = [
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 type SidebarProps = {
@@ -83,16 +53,15 @@ export default function Sidebar({ email }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [fabOpen, setFabOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleSignOut = async () => {
     const supabase = createClient();
     const { error } = await supabase.auth.signOut();
-
     if (error) {
       toast.error("Failed to sign out");
       return;
     }
-
     router.push("/login");
   };
 
@@ -100,7 +69,6 @@ export default function Sidebar({ email }: SidebarProps) {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      {/* Brand */}
       <div className="px-6 py-6">
         <h1 className="text-2xl font-bold text-white tracking-tight">
           Inv<span className="text-amber-400">ox</span>a
@@ -110,12 +78,10 @@ export default function Sidebar({ email }: SidebarProps) {
 
       <Separator className="bg-slate-800" />
 
-      {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
-
           return (
             <Link
               key={item.href}
@@ -136,7 +102,6 @@ export default function Sidebar({ email }: SidebarProps) {
 
       <Separator className="bg-slate-800" />
 
-      {/* User */}
       <div className="px-3 py-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -176,36 +141,101 @@ export default function Sidebar({ email }: SidebarProps) {
 
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
-        <h1 className="text-xl font-bold text-white">
+        <button
+          onClick={() => setDrawerOpen(true)}
+          className="text-slate-400 hover:text-white p-1"
+        >
+          <Menu size={22} />
+        </button>
+
+        <h1 className="text-xl font-bold text-white absolute left-1/2 -translate-x-1/2">
           Inv<span className="text-amber-400">ox</span>a
         </h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button>
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
-                  {initials}
-                </AvatarFallback>
-              </Avatar>
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="w-48 bg-slate-800 border-slate-700"
-          >
-            <DropdownMenuItem
-              onClick={handleSignOut}
-              className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
-            >
-              <LogOut size={14} className="mr-2" />
-              Sign out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <Avatar className="h-8 w-8">
+          <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
+            {initials}
+          </AvatarFallback>
+        </Avatar>
       </div>
 
       {/* Mobile top padding */}
       <div className="md:hidden h-[52px] shrink-0" />
+
+      {/* Mobile drawer overlay */}
+      {drawerOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-50 bg-slate-950/80"
+          onClick={() => setDrawerOpen(false)}
+        >
+          <div
+            className="w-72 h-full bg-slate-900 border-r border-slate-800 flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Drawer header */}
+            <div className="flex items-center justify-between px-4 py-4 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <Avatar className="h-9 w-9">
+                  <AvatarFallback className="bg-amber-400 text-slate-950 text-sm font-bold">
+                    {initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="text-white text-sm font-medium">
+                    Augustine Edeh
+                  </p>
+                  <p className="text-slate-500 text-xs truncate max-w-[160px]">
+                    {email}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Drawer nav — all items */}
+            <nav className="flex-1 px-3 py-4 space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setDrawerOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                      isActive
+                        ? "bg-amber-400/10 text-amber-400"
+                        : "text-slate-400 hover:text-white hover:bg-slate-800",
+                    )}
+                  >
+                    <Icon size={18} />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <Separator className="bg-slate-800" />
+
+            {/* Sign out */}
+            <div className="px-3 py-4">
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:text-red-300 hover:bg-slate-800 transition-colors"
+              >
+                <LogOut size={18} />
+                Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile FAB */}
       <div className="md:hidden fixed bottom-20 right-4 z-50">
@@ -232,7 +262,7 @@ export default function Sidebar({ email }: SidebarProps) {
         <button
           onClick={() => setFabOpen(!fabOpen)}
           className={cn(
-            "w-14 h-14 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform",
+            "w-14 h-14 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform duration-200",
             fabOpen && "rotate-45",
           )}
         >
@@ -246,7 +276,6 @@ export default function Sidebar({ email }: SidebarProps) {
           {bottomNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
-
             return (
               <Link
                 key={item.href}
@@ -264,7 +293,7 @@ export default function Sidebar({ email }: SidebarProps) {
         </div>
       </div>
 
-      {/* Mobile bottom padding so content doesn't hide behind bottom nav */}
+      {/* Mobile bottom padding */}
       <div className="md:hidden h-[65px] shrink-0" />
     </>
   );
