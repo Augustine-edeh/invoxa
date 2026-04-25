@@ -38,7 +38,7 @@ export default function DashboardClient({ invoices, proposals }: Props) {
   return (
     <div className="p-6 md:p-8 space-y-6 pb-24 md:pb-8">
       {/* Mobile hero revenue */}
-      <div className="md:hidden space-y-1">
+      <div className="md:hidden space-y-1 mt-10">
         <p className="text-slate-500 text-xs uppercase tracking-wider">
           Total revenue
         </p>
