@@ -267,8 +267,8 @@ export default function InvoicePDFDownloadButton({ invoice }: Props) {
       disabled={isGenerating}
       className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold"
     >
-      <Download size={14} className="mr-2" />
-      {isGenerating ? "Generating..." : "Download PDF"}
+      <Download size={14} className="mr-0 md:mr-1" />
+      {isGenerating ? "Generating..." : "Download"}
     </Button>
   );
 }
