@@ -107,6 +107,7 @@ export default function InvoiceDetail({ invoice }: Props) {
         </div>
 
         {/* Actions */}
+        {/* NOTE: consider adding flex-wrap as recommended by claude */}
         <div className="flex justify-end gap-2">
           <Link href={`/dashboard/invoice/${invoice.id}/edit`}>
             <Button
@@ -188,7 +189,7 @@ export default function InvoiceDetail({ invoice }: Props) {
       {/* Invoice details */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
         {/* Client + Dates */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="flex justify-between gap-4">
           <div className="space-y-1">
             <p className="text-slate-500 text-xs uppercase tracking-wide">
               Billed to

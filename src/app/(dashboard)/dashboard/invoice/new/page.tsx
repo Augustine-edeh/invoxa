@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 
 export default function NewInvoicePage() {
   return (
-    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6">
+    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6 mt-14 md:mt-0">
       {/* Header */}
       <div className="space-y-1">
         <Link
@@ -21,7 +21,7 @@ export default function NewInvoicePage() {
       </div>
 
       {/* Form */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+      <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-20 md:mb-0">
         <InvoiceForm />
       </div>
     </div>

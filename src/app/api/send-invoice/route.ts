@@ -38,6 +38,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
     }
 
+    // Fetch sender profile
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    const senderName = profile?.full_name ?? "Augustine Edeh";
+    const senderEmail = profile?.email ?? "info.augustinesedeh@gmail.com";
+    const senderPhone = profile?.phone ?? "+234 907 666 5289";
+
     // Format currency
     const formatCurrency = (amount: number) =>
       `NGN ${amount.toLocaleString("en-NG")}`;
@@ -69,7 +80,7 @@ export async function POST(request: NextRequest) {
       from: "Invoxa <onboarding@resend.dev>",
       //   to: invoice.client_email,
       to: user.email!, //NOTE: For testing purposes, we're sending the email to the authenticated user instead of the client's email. Change this to invoice.client_email in production.
-      subject: `Invoice #${invoice.invoice_number} from Augustine Edeh`,
+      subject: `Invoice #${invoice.invoice_number} from ${senderName}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -85,7 +96,7 @@ export async function POST(request: NextRequest) {
               <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: 1px;">
                 Inv<span style="color: #d97706;">ox</span>a
               </h1>
-              <p style="margin: 6px 0 0; font-size: 13px; color: #94a3b8;">Invoice from Augustine Edeh</p>
+              <p style="margin: 6px 0 0; font-size: 13px; color: #94a3b8;">Invoice from ${senderName}</p>
             </div>
 
             <!-- Invoice info bar -->
@@ -167,8 +178,8 @@ export async function POST(request: NextRequest) {
               <!-- Sign off -->
               <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #f3f4f6;">
                 <p style="margin: 0; font-size: 14px; color: #374151;">Best regards,</p>
-                <p style="margin: 4px 0 0; font-size: 14px; font-weight: 700; color: #111827;">Augustine Edeh</p>
-                <p style="margin: 2px 0 0; font-size: 13px; color: #6b7280;">info.augustinesedeh@gmail.com</p>
+                <p style="margin: 4px 0 0; font-size: 14px; font-weight: 700; color: #111827;">${senderName}</p>
+                <p style="margin: 2px 0 0; font-size: 13px; color: #6b7280;">${senderEmail}</p>
               </div>
             </div>
 

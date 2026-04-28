@@ -21,7 +21,7 @@ export default async function ProposalDetailPage({ params }: Props) {
   if (error || !proposal) notFound();
 
   return (
-    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6">
+    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6 pt-20 pb-24 md:pb-8">
       <div className="space-y-1">
         <Link
           href="/dashboard"
@@ -42,7 +42,6 @@ export default async function ProposalDetailPage({ params }: Props) {
           })}
         </p>
       </div>
-
       <ProposalDetail proposal={proposal} />
     </div>
   );
