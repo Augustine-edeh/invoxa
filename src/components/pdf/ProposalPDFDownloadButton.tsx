@@ -17,6 +17,14 @@ export default function ProposalPDFDownloadButton({ proposal }: Props) {
     setIsGenerating(true);
 
     try {
+      const { profileService } = await import("@/services/profileService");
+      const profile = await profileService.get();
+
+      const senderName = profile?.full_name ?? "Augustine Edeh";
+      const senderEmail = profile?.email ?? "info.augustinesedeh@gmail.com";
+      const senderPhone = profile?.phone ?? "+234 907 666 5289";
+      const senderBusiness = profile?.business_name ?? "";
+
       const { jsPDF } = await import("jspdf");
       const doc = new jsPDF();
 
@@ -65,16 +73,18 @@ export default function ProposalPDFDownloadButton({ proposal }: Props) {
       doc.text(proposal.status.toUpperCase(), 190, 28, { align: "right" });
 
       // Sender details
+      // Sender details from profile
       doc.setFontSize(9);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(...dark);
-      doc.text("Augustine Edeh", 190, 36, { align: "right" });
+      doc.text(senderName, 190, 36, { align: "right" });
 
       doc.setFontSize(8);
       doc.setFont("helvetica", "normal");
       doc.setTextColor(...gray);
-      doc.text("info.augustinesedeh@gmail.com", 190, 42, { align: "right" });
-      doc.text("+234 907 666 5289", 190, 48, { align: "right" });
+      doc.text(senderEmail, 190, 42, { align: "right" });
+      if (senderPhone) doc.text(senderPhone, 190, 48, { align: "right" });
+      if (senderBusiness) doc.text(senderBusiness, 190, 54, { align: "right" });
 
       // Divider
       doc.setDrawColor(229, 231, 235);
