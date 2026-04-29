@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { Proposal } from "@/types/proposal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,15 @@ import {
 } from "@/hooks/useProposals";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { CheckCircle, Send, Trash2, XCircle, Clock, Edit } from "lucide-react";
+import {
+  CheckCircle,
+  Send,
+  Trash2,
+  XCircle,
+  Clock,
+  Edit,
+  Mail,
+} from "lucide-react";
 import ProposalPDFDownloadButton from "@/components/pdf/ProposalPDFDownloadButton";
 
 const statusStyles: Record<string, string> = {
@@ -31,6 +40,32 @@ export default function ProposalDetail({ proposal }: Props) {
     useUpdateProposalStatus();
   const { mutateAsync: deleteProposal, isPending: isDeleting } =
     useDeleteProposal();
+
+  const [isSending, setIsSending] = useState(false);
+
+  const handleSendEmail = async () => {
+    if (!confirm(`Send proposal to ${proposal.client_email}?`)) return;
+
+    setIsSending(true);
+
+    try {
+      const res = await fetch("/api/send-proposal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ proposalId: proposal.id }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      toast.success(`Proposal sent to ${proposal.client_email}`);
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message ?? "Failed to send email");
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   const handleStatusUpdate = async (status: Proposal["status"]) => {
     try {
@@ -72,8 +107,28 @@ export default function ProposalDetail({ proposal }: Props) {
           </p>
         </div>
 
-        {/* PDF Download */}
-        <div className="flex justify-end">
+        {/* Actions & PDF Download buttons*/}
+        <div className="flex flex-wrap justify-end gap-2">
+          <Link href={`/dashboard/proposal/${proposal.id}/edit`}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+            >
+              <Edit size={14} className="mr-2" />
+              Edit
+            </Button>
+          </Link>
+          <Button
+            size="sm"
+            onClick={handleSendEmail}
+            disabled={isSending}
+            variant="outline"
+            className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+          >
+            <Mail size={14} className="mr-2" />
+            {isSending ? "Sending..." : "Email to client"}
+          </Button>
           <ProposalPDFDownloadButton proposal={proposal} />
         </div>
 
