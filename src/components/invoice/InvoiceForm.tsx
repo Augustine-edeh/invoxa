@@ -1,5 +1,6 @@
 "use client";
 
+import { invoiceService } from "@/services/invoiceService";
 import { useInvoiceStore } from "@/stores/useInvoiceStore";
 import { useCreateInvoice } from "@/hooks/useInvoices";
 import { Input } from "@/components/ui/input";
@@ -22,8 +23,9 @@ export default function InvoiceForm() {
   // Auto-generate invoice number on mount
   useEffect(() => {
     if (!form.invoice_number) {
-      const number = `INV-${Date.now().toString().slice(-6)}`;
-      setField("invoice_number", number);
+      invoiceService.generateNumber().then((number) => {
+        setField("invoice_number", number);
+      });
     }
   }, []);
 

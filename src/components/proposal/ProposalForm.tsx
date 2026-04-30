@@ -1,5 +1,6 @@
 "use client";
 
+import { proposalService } from "@/services/proposalService";
 import { useProposalStore } from "@/stores/useProposalStore";
 import { useCreateProposal } from "@/hooks/useProposals";
 import { Input } from "@/components/ui/input";
@@ -20,8 +21,9 @@ export default function ProposalForm() {
 
   useEffect(() => {
     if (!form.proposal_number) {
-      const number = `PROP-${Date.now().toString().slice(-6)}`;
-      setField("proposal_number", number);
+      proposalService.generateNumber().then((number) => {
+        setField("proposal_number", number);
+      });
     }
   }, []);
 
