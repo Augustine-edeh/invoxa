@@ -20,7 +20,7 @@ export default async function SettingsPage() {
     .single();
 
   return (
-    <div className="p-6 md:p-8 max-w-2xl mx-auto space-y-6 pb-24 md:pb-8">
+    <div className="p-6 md:p-8 max-w-2xl mx-auto space-y-6 py-24 md:pb-8">
       <div className="space-y-1">
         <Link
           href="/dashboard"

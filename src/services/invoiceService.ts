@@ -82,4 +82,20 @@ export const invoiceService = {
 
     if (error) throw error;
   },
+
+  async generateNumber(): Promise<string> {
+    const supabase = createClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return `INV-001`;
+
+    const { data, error } = await supabase.rpc("generate_invoice_number", {
+      user_uuid: user.id,
+    });
+
+    if (error || !data) return `INV-001`;
+    return data;
+  },
 };
