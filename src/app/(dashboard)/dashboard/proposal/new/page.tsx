@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 
 export default function NewProposalPage() {
   return (
-    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6 mt-14 md:mt-0">
+    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6 py-24 md:pb-8">
       <div className="space-y-1">
         <Link
           href="/dashboard"

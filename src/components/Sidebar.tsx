@@ -42,10 +42,6 @@ const bottomNavItems = [
   { label: "Clients", href: "/dashboard/clients", icon: Users },
 ];
 
-const drawerItems = [
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
-];
-
 type SidebarProps = {
   email: string;
 };
