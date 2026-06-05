@@ -12,7 +12,7 @@ const Footer = () => {
           <p className="text-slate-500 text-xs">
             Built by{" "}
             <a
-              href="https://augustine-portfolio-kappa.vercel.app"
+              href="https://augustineedeh.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-amber-400 hover:text-amber-300 transition-colors"
@@ -27,7 +27,7 @@ const Footer = () => {
             Sign in
           </Link>
           <a
-            href="https://augustine-portfolio-kappa.vercel.app"
+            href="https://augustineedeh.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors"
