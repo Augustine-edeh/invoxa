@@ -20,7 +20,10 @@ const features = [
 
 const FeatureItem = ({ feature }: { feature: string }) => (
   <div className="group flex items-center gap-3 px-6 py-2">
-    <CheckCircle size={18} className="text-amber-400 shrink-0" />
+    <CheckCircle
+      size={18}
+      className="text-amber-400 shrink-0 transition-transform group-hover:scale-110"
+    />
 
     <span className="text-slate-300 text-sm transition-colors group-hover:text-white whitespace-nowrap">
       {feature}
@@ -30,13 +33,26 @@ const FeatureItem = ({ feature }: { feature: string }) => (
 
 const MarqueeFeatures = () => (
   <div className="space-y-4">
-    <Marquee speed={30} pauseOnHover gradient={false}>
+    <Marquee
+      speed={30}
+      pauseOnHover
+      gradient
+      gradientColor="#0F172ACC"
+      gradientWidth={50}
+    >
       {features.map((feature) => (
         <FeatureItem key={feature} feature={feature} />
       ))}
     </Marquee>
 
-    <Marquee speed={25} direction="right" pauseOnHover gradient={false}>
+    <Marquee
+      speed={25}
+      direction="right"
+      pauseOnHover
+      gradient
+      gradientColor="#0F172ACC"
+      gradientWidth={100}
+    >
       {[...features].reverse().map((feature) => (
         <FeatureItem key={feature} feature={feature} />
       ))}
@@ -54,14 +70,25 @@ const GridFeatures = () => (
 
 const WhatIsIncluded = () => {
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [hasUserPreference, setHasUserPreference] = useState(false);
 
   useEffect(() => {
+    const savedPreference = localStorage.getItem("reduce-motion");
+
+    if (savedPreference !== null) {
+      setReduceMotion(savedPreference === "true");
+      setHasUserPreference(true);
+      return;
+    }
+
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     setReduceMotion(mediaQuery.matches);
 
     const handleChange = (e: MediaQueryListEvent) => {
-      setReduceMotion(e.matches);
+      if (!hasUserPreference) {
+        setReduceMotion(e.matches);
+      }
     };
 
     mediaQuery.addEventListener("change", handleChange);
@@ -69,7 +96,16 @@ const WhatIsIncluded = () => {
     return () => {
       mediaQuery.removeEventListener("change", handleChange);
     };
-  }, []);
+  }, [hasUserPreference]);
+
+  const handleMotionToggle = () => {
+    const newValue = !reduceMotion;
+
+    setReduceMotion(newValue);
+    setHasUserPreference(true);
+
+    localStorage.setItem("reduce-motion", String(newValue));
+  };
 
   return (
     <section className="py-20 px-6">
@@ -89,30 +125,18 @@ const WhatIsIncluded = () => {
               </p>
             </div>
 
-            <div className="flex justify-center">
-              <button
-                onClick={() => setReduceMotion((prev) => !prev)}
-                className="rounded-md border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
-              >
-                {reduceMotion ? "Enable Animations" : "Reduce Motion"}
-              </button>
+            <div className="space-y-2">
+              <div className="flex justify-center sm:justify-end">
+                <button
+                  onClick={handleMotionToggle}
+                  className="rounded-full border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
+                >
+                  {/* {reduceMotion ? "Enable Animations" : "Reduce Motion"} */}
+                  {reduceMotion ? "Animations Off" : "Animations On"}
+                </button>
+              </div>
+              {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
             </div>
-
-            {/* {reduceMotion ? (
-              <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-x-12 gap-y-4 justify-center">
-                {features.map((feature) => (
-                  <FeatureItem key={feature} feature={feature} />
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
-                {features.map((feature) => (
-                  <FeatureItem key={feature} feature={feature} />
-                ))}
-              </div>
-            )} */}
-
-            {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
 
             <div className="flex flex-col items-center gap-3">
               <Link
