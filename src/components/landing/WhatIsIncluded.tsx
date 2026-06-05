@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Marquee from "react-fast-marquee";
 
 const features = [
   "Unlimited invoices",
@@ -18,12 +19,36 @@ const features = [
 ];
 
 const FeatureItem = ({ feature }: { feature: string }) => (
-  <div className="group flex items-center gap-3 py-2">
+  <div className="group flex items-center gap-3 px-6 py-2">
     <CheckCircle size={18} className="text-amber-400 shrink-0" />
 
-    <span className="text-slate-300 text-sm transition-colors group-hover:text-white">
+    <span className="text-slate-300 text-sm transition-colors group-hover:text-white whitespace-nowrap">
       {feature}
     </span>
+  </div>
+);
+
+const MarqueeFeatures = () => (
+  <div className="space-y-4">
+    <Marquee speed={30} pauseOnHover gradient={false}>
+      {features.map((feature) => (
+        <FeatureItem key={feature} feature={feature} />
+      ))}
+    </Marquee>
+
+    <Marquee speed={25} direction="right" pauseOnHover gradient={false}>
+      {[...features].reverse().map((feature) => (
+        <FeatureItem key={feature} feature={feature} />
+      ))}
+    </Marquee>
+  </div>
+);
+
+const GridFeatures = () => (
+  <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-x-12 gap-y-4 justify-center">
+    {features.map((feature) => (
+      <FeatureItem key={feature} feature={feature} />
+    ))}
   </div>
 );
 
@@ -73,7 +98,7 @@ const WhatIsIncluded = () => {
               </button>
             </div>
 
-            {reduceMotion ? (
+            {/* {reduceMotion ? (
               <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-x-12 gap-y-4 justify-center">
                 {features.map((feature) => (
                   <FeatureItem key={feature} feature={feature} />
@@ -85,7 +110,9 @@ const WhatIsIncluded = () => {
                   <FeatureItem key={feature} feature={feature} />
                 ))}
               </div>
-            )}
+            )} */}
+
+            {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
 
             <div className="flex flex-col items-center gap-3">
               <Link
