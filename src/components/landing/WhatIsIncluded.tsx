@@ -20,7 +20,10 @@ const features = [
 
 const FeatureItem = ({ feature }: { feature: string }) => (
   <div className="group flex items-center gap-3 px-6 py-2">
-    <CheckCircle size={18} className="text-amber-400 shrink-0" />
+    <CheckCircle
+      size={18}
+      className="text-amber-400 shrink-0 transition-transform group-hover:scale-110"
+    />
 
     <span className="text-slate-300 text-sm transition-colors group-hover:text-white whitespace-nowrap">
       {feature}
@@ -54,14 +57,25 @@ const GridFeatures = () => (
 
 const WhatIsIncluded = () => {
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [hasUserPreference, setHasUserPreference] = useState(false);
 
   useEffect(() => {
+    const savedPreference = localStorage.getItem("reduce-motion");
+
+    if (savedPreference !== null) {
+      setReduceMotion(savedPreference === "true");
+      setHasUserPreference(true);
+      return;
+    }
+
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     setReduceMotion(mediaQuery.matches);
 
     const handleChange = (e: MediaQueryListEvent) => {
-      setReduceMotion(e.matches);
+      if (!hasUserPreference) {
+        setReduceMotion(e.matches);
+      }
     };
 
     mediaQuery.addEventListener("change", handleChange);
@@ -69,7 +83,16 @@ const WhatIsIncluded = () => {
     return () => {
       mediaQuery.removeEventListener("change", handleChange);
     };
-  }, []);
+  }, [hasUserPreference]);
+
+  const handleMotionToggle = () => {
+    const newValue = !reduceMotion;
+
+    setReduceMotion(newValue);
+    setHasUserPreference(true);
+
+    localStorage.setItem("reduce-motion", String(newValue));
+  };
 
   return (
     <section className="py-20 px-6">
@@ -91,7 +114,7 @@ const WhatIsIncluded = () => {
 
             <div className="flex justify-center">
               <button
-                onClick={() => setReduceMotion((prev) => !prev)}
+                onClick={handleMotionToggle}
                 className="rounded-md border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
               >
                 {reduceMotion ? "Show Animated View" : "Show Static View"}
