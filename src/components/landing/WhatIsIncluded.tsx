@@ -98,20 +98,6 @@ const WhatIsIncluded = () => {
               </button>
             </div>
 
-            {/* {reduceMotion ? (
-              <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-x-12 gap-y-4 justify-center">
-                {features.map((feature) => (
-                  <FeatureItem key={feature} feature={feature} />
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
-                {features.map((feature) => (
-                  <FeatureItem key={feature} feature={feature} />
-                ))}
-              </div>
-            )} */}
-
             {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
 
             <div className="flex flex-col items-center gap-3">
