@@ -94,7 +94,7 @@ const WhatIsIncluded = () => {
                 onClick={() => setReduceMotion((prev) => !prev)}
                 className="rounded-md border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
               >
-                {reduceMotion ? "Enable Animations" : "Reduce Motion"}
+                {reduceMotion ? "Show Animated View" : "Show Static View"}
               </button>
             </div>
 
