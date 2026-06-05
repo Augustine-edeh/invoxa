@@ -131,7 +131,8 @@ const WhatIsIncluded = () => {
                   onClick={handleMotionToggle}
                   className="rounded-full border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
                 >
-                  {reduceMotion ? "Enable Animations" : "Reduce Motion"}
+                  {/* {reduceMotion ? "Enable Animations" : "Reduce Motion"} */}
+                  {reduceMotion ? "Animations Off" : "Animations On"}
                 </button>
               </div>
               {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
