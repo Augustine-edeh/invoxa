@@ -33,13 +33,26 @@ const FeatureItem = ({ feature }: { feature: string }) => (
 
 const MarqueeFeatures = () => (
   <div className="space-y-4">
-    <Marquee speed={30} pauseOnHover gradient={false}>
+    <Marquee
+      speed={30}
+      pauseOnHover
+      gradient
+      gradientColor="#0F172ACC"
+      gradientWidth={50}
+    >
       {features.map((feature) => (
         <FeatureItem key={feature} feature={feature} />
       ))}
     </Marquee>
 
-    <Marquee speed={25} direction="right" pauseOnHover gradient={false}>
+    <Marquee
+      speed={25}
+      direction="right"
+      pauseOnHover
+      gradient
+      gradientColor="#0F172ACC"
+      gradientWidth={100}
+    >
       {[...features].reverse().map((feature) => (
         <FeatureItem key={feature} feature={feature} />
       ))}
