@@ -125,16 +125,17 @@ const WhatIsIncluded = () => {
               </p>
             </div>
 
-            <div className="flex justify-center">
-              <button
-                onClick={handleMotionToggle}
-                className="rounded-md border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
-              >
-                {reduceMotion ? "Show Animated View" : "Show Static View"}
-              </button>
+            <div className="space-y-2">
+              <div className="flex justify-center sm:justify-end">
+                <button
+                  onClick={handleMotionToggle}
+                  className="rounded-full border border-slate-700 px-3 py-2 text-xs text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
+                >
+                  {reduceMotion ? "Enable Animations" : "Reduce Motion"}
+                </button>
+              </div>
+              {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
             </div>
-
-            {reduceMotion ? <GridFeatures /> : <MarqueeFeatures />}
 
             <div className="flex flex-col items-center gap-3">
               <Link
