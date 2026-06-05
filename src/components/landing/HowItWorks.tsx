@@ -29,23 +29,27 @@ const HowItWorks = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {howItWorksSteps.map((item, index) => (
-            <div key={item.step} className="relative space-y-4">
-              {index < 2 && (
-                <div className="hidden md:block absolute top-6 left-full w-full h-px bg-slate-800 -translate-x-4 z-0" />
-              )}
-              <div className="relative z-10 size-12 rounded-full bg-amber-400/10 border border-amber-400/30 flex items-center justify-center">
-                <span className="text-amber-400 font-bold text-sm">
-                  {item.step}
-                </span>
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {howItWorksSteps.map((item, index) => (
+              <div key={item.step} className="relative space-y-4">
+                <div className="flex flex-col items-center space-y-3">
+                  <div className="relative z-10 size-12 rounded-full bg-amber-400/10 border border-amber-400/30 flex items-center justify-center">
+                    <span className="text-amber-400 font-bold text-sm">
+                      {item.step}
+                    </span>
+                  </div>
+                  <h3 className="text-white font-semibold text-lg">
+                    {item.title}
+                  </h3>
+                </div>
+
+                <p className="text-slate-400 text-sm leading-relaxed text-center">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-white font-semibold text-lg">{item.title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
