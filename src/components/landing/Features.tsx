@@ -58,26 +58,24 @@ const Features = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature) => {
-            return (
-              <div
-                key={feature.title}
-                className="group bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-3 hover:border-slate-700 transition-colors"
-              >
-                <div className="flex flex-col space-y-3 w-fit">
-                  <div className="text-xs uppercase tracking-[0.2em] text-amber-400">
-                    {feature.label}
-                  </div>
-                  <div className="h-px w-full origin-left scale-x-0 bg-linear-to-r from-amber-400 to-amber-300 transition-transform duration-500 ease-out group-hover:scale-x-100" />
+          {features.map((feature) => (
+            <div
+              key={feature.title}
+              className="group bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-3 hover:border-slate-700 transition-colors"
+            >
+              <div className="flex flex-col space-y-3 w-fit">
+                <div className="text-xs uppercase tracking-[0.2em] text-amber-400">
+                  {feature.label}
                 </div>
-
-                <h3 className="text-white font-semibold">{feature.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {feature.desc}
-                </p>
+                <div className="h-px w-full origin-left scale-x-0 bg-linear-to-r from-amber-400 to-amber-300 transition-transform duration-500 ease-out group-hover:scale-x-100" />
               </div>
-            );
-          })}
+
+              <h3 className="text-white font-semibold">{feature.title}</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                {feature.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
