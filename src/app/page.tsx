@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Footer from "@/components/landing/Footer";
 import HowItWorks from "@/components/landing/HowItWorks";
 import WhatIsIncluded from "@/components/landing/WhatIsIncluded";
