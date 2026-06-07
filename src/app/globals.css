@@ -137,3 +137,27 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Badge Shimmer Animation */
+@keyframes badge-shimmer {
+  from {
+    transform: translateX(-150px) skewX(-25deg);
+  }
+
+  to {
+    transform: translateX(350px) skewX(150deg);
+  }
+}
+
+.badge-shimmer {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(251, 191, 36, 0.15),
+    rgba(251, 191, 36, 0.4),
+    rgba(251, 191, 36, 0.15),
+    transparent
+  );
+
+  animation: badge-shimmer 9s ease-in-out infinite;
+}

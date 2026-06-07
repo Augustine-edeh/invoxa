@@ -5,9 +5,17 @@ const Hero = () => {
   return (
     <section className="pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto text-center space-y-6">
-        <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/20 rounded-full px-4 py-1.5 text-amber-400 text-sm font-medium">
-          {/* <Zap size={14} /> */}
+        {/* <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/20 rounded-full px-4 py-1.5 text-amber-400 text-sm font-medium">
+          <Zap size={14} />
           Built for Nigerian freelancers
+        </div> */}
+
+        <div className="relative inline-flex overflow-hidden rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-1.5 text-sm font-medium text-amber-400">
+          <span className="relative z-10">Built for Nigerian freelancers</span>
+
+          <span className="absolute inset-0 pointer-events-none">
+            <span className="badge-shimmer absolute -left-24 top-0 h-full w-10" />
+          </span>
         </div>
 
         <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
