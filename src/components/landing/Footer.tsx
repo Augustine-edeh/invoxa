@@ -26,20 +26,12 @@ const Footer = () => {
           <Link href="/login" className="hover:text-white transition-colors">
             Sign in
           </Link>
-          <a
-            href="https://augustineedeh.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
-          >
-            Portfolio
-          </a>
-          <a
+          <Link
             href="mailto:info.augustinesedeh@gmail.com"
             className="hover:text-white transition-colors"
           >
             Contact
-          </a>
+          </Link>
         </div>
       </div>
 
