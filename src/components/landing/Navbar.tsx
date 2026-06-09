@@ -9,12 +9,12 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a
+          <Link
             href="#features"
             className="text-sm text-slate-400 hover:text-white transition-colors"
           >
             Features
-          </a>
+          </Link>
 
           <Link
             href="#how-it-works"
