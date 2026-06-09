@@ -8,7 +8,7 @@ import Navbar from "@/components/landing/Navbar";
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-slate-950 text-white">
       <Navbar />
       <Hero />
       <Stats />
@@ -16,7 +16,7 @@ const LandingPage = () => {
       <HowItWorks />
       <WhatIsIncluded />
       <Footer />
-    </div>
+    </main>
   );
 };
 
