@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useActiveSection } from "@/hooks/use-active-section";
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Navbar = () => {
   const CustomFocusRingStyles =
@@ -100,12 +102,51 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link
+          {/* <Link
             href="/login"
             className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
           >
             Sign In
+          </Link> */}
+
+          <Link
+            href="/login"
+            className="hidden md:block bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
+          >
+            Sign In
           </Link>
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="md:hidden rounded-md p-2 text-slate-300 hover:text-white">
+                <Menu size={20} />
+              </button>
+            </SheetTrigger>
+
+            <SheetContent
+              side="right"
+              className="bg-slate-950 border-slate-800"
+            >
+              <div className="mt-10 flex flex-col gap-6">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.id}
+                    href={link.href}
+                    className={`text-lg transition-colors ${activeSection === link.id ? "text-amber-400" : "text-slate-300"}`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+
+                <Link
+                  href="/login"
+                  className=" mt-4 rounded-lg bg-amber-400 px-4 py-3 text-center font-semibold text-slate-950"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>
