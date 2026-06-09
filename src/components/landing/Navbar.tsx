@@ -1,6 +1,32 @@
+"use client";
+
 import Link from "next/link";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const Navbar = () => {
+  const CustomFocusRingStyles =
+    "rounded-md px-1 py-1 text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+
+  const navLinks = [
+    {
+      label: "Features",
+      href: "#features",
+      id: "features",
+    },
+    {
+      label: "How It Works",
+      href: "#how-it-works",
+      id: "how-it-works",
+    },
+    {
+      label: "Pricing",
+      href: "#pricing",
+      id: "pricing",
+    },
+  ];
+
+  const activeSection = useActiveSection();
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -8,7 +34,7 @@ const Navbar = () => {
           Inv<span className="text-amber-400">ox</span>a
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        {/* <div className="hidden md:flex items-center gap-8">
           <Link
             href="#features"
             className="text-sm text-slate-400 hover:text-white transition-colors"
@@ -29,6 +55,48 @@ const Navbar = () => {
           >
             Pricing
           </Link>
+        </div> */}
+
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.id}
+              href={link.href}
+              className={`
+        relative
+        text-sm
+        transition-colors
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-amber-400/40
+        focus-visible:ring-offset-2
+        focus-visible:ring-offset-slate-950
+        rounded-md
+
+        ${
+          activeSection === link.id
+            ? "text-amber-400"
+            : "text-slate-400 hover:text-white"
+        }
+      `}
+            >
+              {link.label}
+
+              <span
+                className={`
+          absolute
+          -bottom-2
+          left-0
+          h-px
+          bg-amber-400
+          transition-all
+          duration-300
+
+          ${activeSection === link.id ? "w-full" : "w-0"}
+        `}
+              />
+            </Link>
+          ))}
         </div>
 
         <div className="flex items-center gap-4">
