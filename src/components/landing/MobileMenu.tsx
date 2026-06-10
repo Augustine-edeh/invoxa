@@ -5,6 +5,7 @@ import {
   SheetContent,
   SheetTrigger,
   SheetTitle,
+  SheetClose,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Menu } from "lucide-react";
@@ -35,39 +36,42 @@ const MobileMenu = () => {
         <div>
           <div className="mt-12 flex flex-col px-4">
             {navLinks.map((link) => (
-              <Link
-                key={link.id}
-                href={link.href}
-                className={clsx(
-                  "group relative py-4 text-lg transition-colors",
-                  focusRingStyles,
-                  activeSection === link.id
-                    ? "text-amber-400"
-                    : "text-slate-300 hover:text-white",
-                )}
-              >
-                {link.label}
-
-                <span
+              <SheetClose asChild key={link.id}>
+                <Link
+                  href={link.href}
                   className={clsx(
-                    "absolute bottom-2 left-0 h-px bg-amber-400 transition-all duration-300",
-                    activeSection === link.id ? "w-12" : "w-0",
+                    "group relative py-4 text-lg transition-colors",
+                    focusRingStyles,
+                    activeSection === link.id
+                      ? "text-amber-400"
+                      : "text-slate-300 hover:text-white",
                   )}
-                />
-              </Link>
+                >
+                  {link.label}
+
+                  <span
+                    className={clsx(
+                      "absolute bottom-2 left-0 h-px bg-amber-400 transition-all duration-300",
+                      activeSection === link.id ? "w-12" : "w-0",
+                    )}
+                  />
+                </Link>
+              </SheetClose>
             ))}
           </div>
 
           <div className="mt-8 border-t border-slate-800 pt-8 px-2">
-            <Link
-              href="/login"
-              className={clsx(
-                "flex h-11 items-center justify-center rounded-lg bg-amber-400 font-semibold text-slate-950 transition-colors hover:bg-amber-500",
-                focusRingStyles,
-              )}
-            >
-              Sign In
-            </Link>
+            <SheetClose asChild>
+              <Link
+                href="/login"
+                className={clsx(
+                  "flex h-11 items-center justify-center rounded-lg bg-amber-400 font-semibold text-slate-950 transition-colors hover:bg-amber-500",
+                  focusRingStyles,
+                )}
+              >
+                Sign In
+              </Link>
+            </SheetClose>
           </div>
         </div>
       </SheetContent>
