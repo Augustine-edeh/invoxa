@@ -4,10 +4,14 @@ import Link from "next/link";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import clsx from "clsx";
 
 const Navbar = () => {
   const CustomFocusRingStyles =
     "rounded-md px-1 py-1 text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+
+  const focusRingStyles =
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-md";
 
   const navLinks = [
     {
@@ -64,38 +68,21 @@ const Navbar = () => {
             <Link
               key={link.id}
               href={link.href}
-              className={`
-        relative
-        text-sm
-        transition-colors
-        focus-visible:outline-none
-        focus-visible:ring-2
-        focus-visible:ring-amber-400/40
-        focus-visible:ring-offset-2
-        focus-visible:ring-offset-slate-950
-        rounded-md
-
-        ${
-          activeSection === link.id
-            ? "text-amber-400"
-            : "text-slate-400 hover:text-white"
-        }
-      `}
+              className={clsx(
+                "group relative px-1 py-1 text-sm transition-colors",
+                focusRingStyles,
+                activeSection === link.id
+                  ? "text-amber-400"
+                  : "text-slate-400 hover:text-white",
+              )}
             >
               {link.label}
 
               <span
-                className={`
-          absolute
-          -bottom-2
-          left-0
-          h-px
-          bg-amber-400
-          transition-all
-          duration-300
-
-          ${activeSection === link.id ? "w-full" : "w-0"}
-        `}
+                className={clsx(
+                  "absolute -bottom-2 left-0 h-px bg-amber-400 transition-all duration-300",
+                  activeSection === link.id ? "w-full" : "w-0",
+                )}
               />
             </Link>
           ))}
