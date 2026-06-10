@@ -112,25 +112,45 @@ const Navbar = () => {
 
             <SheetContent
               side="right"
-              className="bg-slate-950 border-slate-800"
+              className="border-slate-800 bg-slate-950"
             >
-              <div className="mt-10 flex flex-col gap-6">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.id}
-                    href={link.href}
-                    className={`text-lg transition-colors ${activeSection === link.id ? "text-amber-400" : "text-slate-300"}`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <div>
+                <div className="mt-12 flex flex-col px-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.id}
+                      href={link.href}
+                      className={clsx(
+                        "group relative py-4 text-lg transition-colors",
+                        focusRingStyles,
+                        activeSection === link.id
+                          ? "text-amber-400"
+                          : "text-slate-300 hover:text-white",
+                      )}
+                    >
+                      {link.label}
 
-                <Link
-                  href="/login"
-                  className=" mt-4 rounded-lg bg-amber-400 px-4 py-3 text-center font-semibold text-slate-950"
-                >
-                  Sign In
-                </Link>
+                      <span
+                        className={clsx(
+                          "absolute bottom-2 left-0 h-px bg-amber-400 transition-all duration-300",
+                          activeSection === link.id ? "w-12" : "w-0",
+                        )}
+                      />
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="mt-8 border-t border-slate-800 pt-8 px-2">
+                  <Link
+                    href="/login"
+                    className={clsx(
+                      "flex h-11 items-center justify-center rounded-lg bg-amber-400 font-semibold text-slate-950 transition-colors hover:bg-amber-500",
+                      focusRingStyles,
+                    )}
+                  >
+                    Sign In
+                  </Link>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
