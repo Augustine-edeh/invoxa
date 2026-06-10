@@ -18,7 +18,10 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-slate-900/50 border-y border-slate-800">
+    <section
+      id="how-it-works"
+      className="py-20 px-6 bg-slate-900/50 border-y border-slate-800"
+    >
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="text-center space-y-3">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
