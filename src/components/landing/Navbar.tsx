@@ -2,35 +2,31 @@
 
 import Link from "next/link";
 import { useActiveSection } from "@/hooks/use-active-section";
-import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import clsx from "clsx";
+import MobileMenu from "@/components/landing/MobileMenu";
+
+export const navLinks = [
+  {
+    label: "Features",
+    href: "#features",
+    id: "features",
+  },
+  {
+    label: "How It Works",
+    href: "#how-it-works",
+    id: "how-it-works",
+  },
+  {
+    label: "Pricing",
+    href: "#pricing",
+    id: "pricing",
+  },
+];
+
+export const focusRingStyles =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-md";
 
 const Navbar = () => {
-  const CustomFocusRingStyles =
-    "rounded-md px-1 py-1 text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
-
-  const focusRingStyles =
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-md";
-
-  const navLinks = [
-    {
-      label: "Features",
-      href: "#features",
-      id: "features",
-    },
-    {
-      label: "How It Works",
-      href: "#how-it-works",
-      id: "how-it-works",
-    },
-    {
-      label: "Pricing",
-      href: "#pricing",
-      id: "pricing",
-    },
-  ];
-
   const activeSection = useActiveSection();
 
   return (
@@ -39,29 +35,6 @@ const Navbar = () => {
         <Link href="#top" className="text-xl font-bold text-white">
           Inv<span className="text-amber-400">ox</span>a
         </Link>
-
-        {/* <div className="hidden md:flex items-center gap-8">
-          <Link
-            href="#features"
-            className="text-sm text-slate-400 hover:text-white transition-colors"
-          >
-            Features
-          </Link>
-
-          <Link
-            href="#how-it-works"
-            className="text-sm text-slate-400 hover:text-white transition-colors"
-          >
-            How It Works
-          </Link>
-
-          <Link
-            href="#pricing"
-            className="text-sm text-slate-400 hover:text-white transition-colors"
-          >
-            Pricing
-          </Link>
-        </div> */}
 
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
@@ -89,13 +62,6 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* <Link
-            href="/login"
-            className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
-          >
-            Sign In
-          </Link> */}
-
           <Link
             href="/login"
             className="hidden md:block bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
@@ -103,62 +69,7 @@ const Navbar = () => {
             Sign In
           </Link>
 
-          <Sheet>
-            <SheetTrigger asChild>
-              <button
-                className={clsx(
-                  "md:hidden rounded-lg p-2 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white",
-                  focusRingStyles,
-                )}
-              >
-                <Menu size={20} />
-              </button>
-            </SheetTrigger>
-
-            <SheetContent
-              side="right"
-              className="border-slate-800 bg-slate-950"
-            >
-              <div>
-                <div className="mt-12 flex flex-col px-4">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.id}
-                      href={link.href}
-                      className={clsx(
-                        "group relative py-4 text-lg transition-colors",
-                        focusRingStyles,
-                        activeSection === link.id
-                          ? "text-amber-400"
-                          : "text-slate-300 hover:text-white",
-                      )}
-                    >
-                      {link.label}
-
-                      <span
-                        className={clsx(
-                          "absolute bottom-2 left-0 h-px bg-amber-400 transition-all duration-300",
-                          activeSection === link.id ? "w-12" : "w-0",
-                        )}
-                      />
-                    </Link>
-                  ))}
-                </div>
-
-                <div className="mt-8 border-t border-slate-800 pt-8 px-2">
-                  <Link
-                    href="/login"
-                    className={clsx(
-                      "flex h-11 items-center justify-center rounded-lg bg-amber-400 font-semibold text-slate-950 transition-colors hover:bg-amber-500",
-                      focusRingStyles,
-                    )}
-                  >
-                    Sign In
-                  </Link>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <MobileMenu />
         </div>
       </div>
     </nav>
