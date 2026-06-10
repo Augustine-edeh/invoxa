@@ -108,7 +108,7 @@ const WhatIsIncluded = () => {
   };
 
   return (
-    <section className="py-20 px-6">
+    <section id="pricing" className="py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-8 md:p-12 shadow-[0_0_60px_rgba(251,191,36,0.05)]">
           <div className="absolute inset-0 bg-linear-to-br from-amber-400/3 via-transparent to-transparent pointer-events-none" />

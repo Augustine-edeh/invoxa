@@ -13,6 +13,10 @@ export default function LenisProvider({
       duration: 1.2,
       smoothWheel: true,
       touchMultiplier: 1.5,
+      anchors: {
+        offset: -50,
+      },
+      // anchors: true,
     });
 
     let frameId: number;
