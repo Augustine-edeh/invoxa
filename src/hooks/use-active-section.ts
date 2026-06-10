@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 const sections = ["top", "features", "how-it-works", "pricing"];
+
 export function useActiveSection() {
   const [activeSection, setActiveSection] = useState("");
 
@@ -12,6 +13,11 @@ export function useActiveSection() {
         const visibleSection = entries.find((entry) => entry.isIntersecting);
 
         if (visibleSection) {
+          if (visibleSection.target.id === "top") {
+            setActiveSection("");
+            return;
+          }
+
           setActiveSection(visibleSection.target.id);
         }
       },

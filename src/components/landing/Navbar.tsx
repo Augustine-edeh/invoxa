@@ -105,7 +105,12 @@ const Navbar = () => {
 
           <Sheet>
             <SheetTrigger asChild>
-              <button className="md:hidden rounded-md p-2 text-slate-300 hover:text-white">
+              <button
+                className={clsx(
+                  "md:hidden rounded-lg p-2 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white",
+                  focusRingStyles,
+                )}
+              >
                 <Menu size={20} />
               </button>
             </SheetTrigger>
