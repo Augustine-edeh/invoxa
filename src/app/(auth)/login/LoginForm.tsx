@@ -89,7 +89,7 @@ export default function LoginForm() {
         </div>
 
         <Card className="bg-slate-900 border-slate-800">
-          <CardHeader className="space-y-1">
+          <CardHeader className="space-y-1 text-center">
             <CardTitle className="text-white text-xl">Welcome back</CardTitle>
             <CardDescription className="text-slate-400">
               Sign in to your Invoxa account

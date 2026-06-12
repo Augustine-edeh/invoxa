@@ -64,7 +64,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         <Card className="bg-slate-900 border-slate-800">
-          <CardHeader className="space-y-1">
+          <CardHeader className="space-y-1 text-center">
             <CardTitle className="text-white text-xl">
               {sent ? "Check your email" : "Reset your password"}
             </CardTitle>
@@ -86,7 +86,7 @@ export default function ForgotPasswordPage() {
                 </div>
                 <Button
                   variant="ghost"
-                  className="w-full text-slate-400 hover:text-white"
+                  className="w-full bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700"
                   onClick={() => setSent(false)}
                 >
                   Try a different email

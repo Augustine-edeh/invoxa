@@ -113,7 +113,7 @@ export default function SignupForm() {
         </div>
 
         <Card className="bg-slate-900 border-slate-800">
-          <CardHeader className="space-y-1">
+          <CardHeader className="space-y-1 text-center">
             <CardTitle className="text-white text-xl">
               Create your account
             </CardTitle>
