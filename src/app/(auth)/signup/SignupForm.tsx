@@ -129,7 +129,7 @@ export default function SignupForm() {
               onClick={handleGoogleSignup}
               disabled={isGoogleLoading || isLoading}
               variant="outline"
-              className="w-full border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+              className="w-full bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700"
             >
               {isGoogleLoading ? (
                 "Redirecting..."
