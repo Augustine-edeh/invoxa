@@ -171,7 +171,7 @@ export default function InvoiceForm() {
           onClick={() => handleSave("draft")}
           disabled={isPending}
           variant="outline"
-          className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+          className="bg-slate-700 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
         >
           <Save size={16} className="mr-2" />
           Save draft
