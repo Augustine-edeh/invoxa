@@ -140,7 +140,7 @@ const WhatIsIncluded = () => {
 
             <div className="flex flex-col items-center gap-3">
               <Link
-                href="/login"
+                href="/signup"
                 className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-8 py-3.5 font-semibold text-slate-950 transition-colors hover:bg-amber-500"
               >
                 <span className="hidden sm:inline">Get Started for Free</span>
