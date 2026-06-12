@@ -17,18 +17,29 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import Link from "next/link";
 
-export default function LoginForm() {
+export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const router = useRouter();
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      toast.error("Please enter your email and password");
+    if (!email || !password || !confirmPassword) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -37,23 +48,36 @@ export default function LoginForm() {
     try {
       const supabase = createClient();
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       });
 
       if (error) throw error;
 
+      toast.success("Account created! Signing you in...");
+
+      // Auto sign in after signup
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) throw signInError;
+
       router.push("/dashboard");
       router.refresh();
     } catch (error: any) {
-      toast.error(error.message ?? "Invalid email or password");
+      toast.error(error.message ?? "Failed to create account");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignup = async () => {
     setIsGoogleLoading(true);
 
     try {
@@ -68,7 +92,7 @@ export default function LoginForm() {
 
       if (error) throw error;
     } catch (error: any) {
-      toast.error(error.message ?? "Failed to sign in with Google");
+      toast.error(error.message ?? "Failed to sign up with Google");
       setIsGoogleLoading(false);
     }
   };
@@ -90,9 +114,11 @@ export default function LoginForm() {
 
         <Card className="bg-slate-900 border-slate-800">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-white text-xl">Welcome back</CardTitle>
+            <CardTitle className="text-white text-xl">
+              Create your account
+            </CardTitle>
             <CardDescription className="text-slate-400">
-              Sign in to your Invoxa account
+              Start creating professional invoices for free
             </CardDescription>
           </CardHeader>
 
@@ -100,7 +126,7 @@ export default function LoginForm() {
             {/* Google button */}
             <Button
               type="button"
-              onClick={handleGoogleLogin}
+              onClick={handleGoogleSignup}
               disabled={isGoogleLoading || isLoading}
               variant="outline"
               className="w-full bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700"
@@ -138,8 +164,8 @@ export default function LoginForm() {
               <Separator className="flex-1 bg-slate-800" />
             </div>
 
-            {/* Email/password form */}
-            <form onSubmit={handleEmailLogin} className="space-y-4">
+            {/* Signup form */}
+            <form onSubmit={handleSignup} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-slate-300">
                   Email address
@@ -168,22 +194,36 @@ export default function LoginForm() {
                   className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-slate-300">
+                  Confirm password
+                </Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={isLoading || isGoogleLoading}
+                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                />
+              </div>
               <Button
                 type="submit"
                 disabled={isLoading || isGoogleLoading}
                 className="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold"
               >
-                {isLoading ? "Signing in..." : "Sign in"}
+                {isLoading ? "Creating account..." : "Create account"}
               </Button>
             </form>
 
             <p className="text-center text-slate-500 text-sm">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/signup"
+                href="/login"
                 className="text-amber-400 hover:text-amber-300 font-medium"
               >
-                Create one
+                Sign in
               </Link>
             </p>
           </CardContent>
