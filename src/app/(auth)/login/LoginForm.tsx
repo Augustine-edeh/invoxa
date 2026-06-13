@@ -89,7 +89,7 @@ export default function LoginForm() {
         </div>
 
         <Card className="bg-slate-900 border-slate-800">
-          <CardHeader className="space-y-1">
+          <CardHeader className="space-y-1 text-center">
             <CardTitle className="text-white text-xl">Welcome back</CardTitle>
             <CardDescription className="text-slate-400">
               Sign in to your Invoxa account
@@ -155,9 +155,17 @@ export default function LoginForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-slate-300">
-                  Password
-                </Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password" className="text-slate-300">
+                    Password
+                  </Label>
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs text-slate-500 hover:text-amber-400 transition-colors"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 <Input
                   id="password"
                   type="password"

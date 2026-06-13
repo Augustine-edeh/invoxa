@@ -18,10 +18,11 @@ export default function DeliverablesList() {
           size="sm"
           onClick={addDeliverable}
           variant="outline"
-          className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-xs"
+          className="bg-slate-700 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-xs"
         >
-          <Plus size={14} className="mr-1" />
-          Add deliverable
+          <Plus size={14} className="mr-0.5" />
+          <span className="hidden sm:block">Add deliverable</span>
+          <span className="sm:hidden">Deliverable</span>
         </Button>
       </div>
 

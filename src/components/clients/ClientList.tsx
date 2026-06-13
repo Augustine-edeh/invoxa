@@ -119,7 +119,8 @@ export default function ClientList({ clients }: Props) {
                 size="sm"
                 onClick={() => handleCreateInvoice(client)}
                 variant="outline"
-                className="flex-1 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-xs"
+                title="Send invoice to client"
+                className="flex-1 bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700 text-xs"
               >
                 <FileText size={13} className="mr-1.5 text-amber-400" />
                 Invoice
@@ -128,7 +129,8 @@ export default function ClientList({ clients }: Props) {
                 size="sm"
                 onClick={() => handleCreateProposal(client)}
                 variant="outline"
-                className="flex-1 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-xs"
+                title="Send proposal to client"
+                className="flex-1 bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700 text-xs"
               >
                 <FilePen size={13} className="mr-1.5 text-blue-400" />
                 Proposal

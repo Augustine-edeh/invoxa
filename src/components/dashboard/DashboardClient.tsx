@@ -62,25 +62,27 @@ export default function DashboardClient({ invoices, proposals }: Props) {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/dashboard/invoice/new">
-            <Button
-              size="sm"
-              className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold"
-            >
+          <Button
+            size="sm"
+            className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-semibold"
+            asChild
+          >
+            <Link href="/dashboard/invoice/new">
               <Plus size={16} className="mr-1" />
               New invoice
-            </Button>
-          </Link>
-          <Link href="/dashboard/proposal/new">
-            <Button
-              size="sm"
-              variant="outline"
-              className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
-            >
+            </Link>
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700"
+            asChild
+          >
+            <Link href="/dashboard/proposal/new">
               <Plus size={16} className="mr-1" />
               New proposal
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
 
@@ -129,13 +131,13 @@ export default function DashboardClient({ invoices, proposals }: Props) {
             <TabsList className="bg-slate-800">
               <TabsTrigger
                 value="invoices"
-                className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-400"
+                className="text-slate-400 hover:text-white/80 data-[state=active]:bg-slate-700 data-[state=active]:text-white"
               >
                 Invoices ({invoices.length})
               </TabsTrigger>
               <TabsTrigger
                 value="proposals"
-                className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-400"
+                className="text-slate-400 hover:text-white/80 data-[state=active]:bg-slate-700 data-[state=active]:text-white"
               >
                 Proposals ({proposals.length})
               </TabsTrigger>
