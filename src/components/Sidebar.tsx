@@ -247,17 +247,17 @@ export default function Sidebar({ email }: SidebarProps) {
             <Link
               href="/dashboard/invoice/new"
               onClick={() => setFabOpen(false)}
-              className="flex items-center gap-2 bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
+              className="flex items-center gap-2 bg-slate-800 text-white text-sm text-nowrap font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
             >
-              <FileText size={15} className="text-amber-400" />
+              <FileText size={17} className="text-amber-400" />
               New invoice
             </Link>
             <Link
               href="/dashboard/proposal/new"
               onClick={() => setFabOpen(false)}
-              className="flex items-center gap-2 bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
+              className="flex items-center gap-2 bg-slate-800 text-white text-sm text-nowrap font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
             >
-              <FilePen size={15} className="text-amber-400" />
+              <FilePen size={17} className="text-amber-400" />
               New proposal
             </Link>
           </div>
@@ -265,7 +265,7 @@ export default function Sidebar({ email }: SidebarProps) {
         <button
           onClick={() => setFabOpen(!fabOpen)}
           className={cn(
-            "w-14 h-14 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform duration-200",
+            "size-14 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg transition-transform duration-200",
             fabOpen && "rotate-45",
           )}
         >
