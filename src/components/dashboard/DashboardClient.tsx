@@ -10,6 +10,7 @@ import RecentDocuments from "./RecentDocuments";
 import Link from "next/link";
 import { Plus, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { formatCompactCurrency, formatCurrency } from "@/lib/currency";
 
 type Props = {
   invoices: Invoice[];
@@ -88,32 +89,32 @@ export default function DashboardClient({ invoices, proposals }: Props) {
 
       {/* Stats */}
       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-4">
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Total earned"
-            value={`₦${totalEarned.toLocaleString()}`}
+            value={`₦${formatCompactCurrency(totalEarned)}`}
             sub={`${invoices.filter((i) => i.status === "paid").length} paid invoices`}
             accent
           />
         </div>
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Pending"
-            value={`₦${totalPending.toLocaleString()}`}
+            value={`₦${formatCompactCurrency(totalPending)}`}
             sub={`${invoices.filter((i) => i.status === "sent").length} awaiting payment`}
           />
         </div>
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Overdue"
-            value={`₦${totalOverdue.toLocaleString()}`}
+            value={`₦${formatCompactCurrency(totalOverdue)}`}
             sub={`${invoices.filter((i) => i.status === "overdue").length} overdue`}
           />
         </div>
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Proposals won"
-            value={`₦${totalProposalValue.toLocaleString()}`}
+            value={`₦${formatCompactCurrency(totalProposalValue)}`}
             sub={`${proposals.filter((p) => p.status === "accepted").length} accepted`}
           />
         </div>
