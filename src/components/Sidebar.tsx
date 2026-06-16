@@ -17,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import MobileLogo from "./dashboard/MobileLogo";
+import { User } from "@supabase/supabase-js";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -43,10 +44,32 @@ const bottomNavItems = [
 ];
 
 type SidebarProps = {
-  email: string;
+  user: User;
 };
 
-export default function Sidebar({ email }: SidebarProps) {
+export default function Sidebar({ user }: SidebarProps) {
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+  };
+
+  const fullName: string =
+    user.user_metadata?.full_name ??
+    user.user_metadata?.name ??
+    user.email ??
+    "";
+
+  const initials = getInitials(fullName);
+
+  const email = user.email ?? "";
+
+  const avatarUrl =
+    user.user_metadata?.avatar_url ?? user.user_metadata?.picture;
+
   const pathname = usePathname();
   const router = useRouter();
   const [fabOpen, setFabOpen] = useState(false);
@@ -61,8 +84,6 @@ export default function Sidebar({ email }: SidebarProps) {
     }
     router.push("/login");
   };
-
-  const initials = email ? email.slice(0, 2).toUpperCase() : "IN";
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -102,23 +123,29 @@ export default function Sidebar({ email }: SidebarProps) {
       <div className="px-3 py-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
-              <Avatar className="h-7 w-7">
-                <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
+            <button className="group flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+              <Avatar>
+                <AvatarImage src={avatarUrl} alt={email} />
+                <AvatarFallback className="bg-amber-400/80 group-hover:bg-amber-400 transition-colors duration-200 text-slate-950 text-xs font-bold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
-              <span className="flex-1 text-left truncate">{email}</span>
+
+              <div className="flex-1 text-left truncate">
+                {fullName && <p className="font-medium">{fullName}</p>}
+
+                <p className="text-sm text-muted-foreground">{email}</p>
+              </div>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             side="top"
             align="start"
-            className="w-48 bg-slate-800 border-slate-700"
+            className="w-56 bg-slate-800 border-slate-700"
           >
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+              className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
             >
               <LogOut size={14} className="mr-2" />
               Sign out
@@ -148,7 +175,8 @@ export default function Sidebar({ email }: SidebarProps) {
           <MobileLogo />
         </div>
 
-        <Avatar className="h-8 w-8">
+        <Avatar className="size-8">
+          <AvatarImage src={avatarUrl} alt={email} />
           <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
             {initials}
           </AvatarFallback>
@@ -156,7 +184,7 @@ export default function Sidebar({ email }: SidebarProps) {
       </div>
 
       {/* Mobile top padding */}
-      <div className="md:hidden h-[52px] shrink-0" />
+      <div className="md:hidden h-13 shrink-0" />
 
       {/* Mobile drawer overlay */}
       {drawerOpen && (
@@ -209,26 +237,28 @@ export default function Sidebar({ email }: SidebarProps) {
             <div className="px-3 py-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
-                    <Avatar className="h-7 w-7">
-                      <AvatarFallback className="bg-amber-400 text-slate-950 text-xs font-bold">
+                  <button className="group flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+                    <Avatar className="size-7">
+                      <AvatarImage src={avatarUrl} alt={email} />
+                      <AvatarFallback className="bg-amber-400/80 group-hover:bg-amber-400 transition-colors text-slate-950 text-xs font-bold">
                         {initials}
                       </AvatarFallback>
                     </Avatar>
-                    <div>
-                      {/* <p>{user.name}</p> //NOTE: add user name here later on */}
-                      <span className="flex-1 text-left truncate">{email}</span>
+                    <div className="flex-1 text-left truncate">
+                      {fullName && <p className="font-medium">{fullName}</p>}
+
+                      <p className="text-sm text-muted-foreground">{email}</p>
                     </div>
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   side="top"
                   align="start"
-                  className="w-48 bg-slate-800 border-slate-700"
+                  className="w-56 bg-slate-800 border-slate-700"
                 >
                   <DropdownMenuItem
                     onClick={handleSignOut}
-                    className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+                    className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
                   >
                     <LogOut size={14} className="mr-2" />
                     Sign out
@@ -297,7 +327,7 @@ export default function Sidebar({ email }: SidebarProps) {
       </div>
 
       {/* Mobile bottom padding */}
-      <div className="md:hidden h-[65px] shrink-0" />
+      <div className="md:hidden h-16.25 shrink-0" />
     </>
   );
 }

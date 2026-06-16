@@ -16,13 +16,16 @@ export default function StatsCard({
   return (
     <div
       className={cn(
-        "rounded-xl border p-5 space-y-1",
+        "h-full w-full flex flex-col rounded-xl border p-5 space-y-1",
         accent
           ? "bg-amber-400/10 border-amber-400/20"
           : "bg-slate-900 border-slate-800",
       )}
     >
-      <p className="text-slate-400 text-xs font-medium uppercase tracking-wide">
+      <p
+        className="text-slate-400 text-xs font-medium uppercase tracking-wide truncate cursor-pointer"
+        title={title}
+      >
         {title}
       </p>
       <p
@@ -33,7 +36,7 @@ export default function StatsCard({
       >
         {value}
       </p>
-      <p className="text-slate-500 text-xs">{sub}</p>
+      <p className="mt-auto text-slate-500 text-xs">{sub}</p>
     </div>
   );
 }
