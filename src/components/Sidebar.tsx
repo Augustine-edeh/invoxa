@@ -141,13 +141,13 @@ export default function Sidebar({ user }: SidebarProps) {
           <DropdownMenuContent
             side="top"
             align="start"
-            className="w-48 bg-slate-800 border-slate-700"
+            className="w-56 bg-slate-800 border-slate-700"
           >
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+              className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
             >
-              <LogOut size={14} className="mr-1" />
+              <LogOut size={14} className="mr-2" />
               Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -254,11 +254,11 @@ export default function Sidebar({ user }: SidebarProps) {
                 <DropdownMenuContent
                   side="top"
                   align="start"
-                  className="w-48 bg-slate-800 border-slate-700"
+                  className="w-56 bg-slate-800 border-slate-700"
                 >
                   <DropdownMenuItem
                     onClick={handleSignOut}
-                    className="text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+                    className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
                   >
                     <LogOut size={14} className="mr-2" />
                     Sign out
@@ -327,7 +327,7 @@ export default function Sidebar({ user }: SidebarProps) {
       </div>
 
       {/* Mobile bottom padding */}
-      <div className="md:hidden h-[65px] shrink-0" />
+      <div className="md:hidden h-16.25 shrink-0" />
     </>
   );
 }
