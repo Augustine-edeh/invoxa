@@ -88,7 +88,7 @@ export default function DashboardClient({ invoices, proposals }: Props) {
 
       {/* Stats */}
       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-4">
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Total earned"
             value={`₦${totalEarned.toLocaleString()}`}
@@ -96,21 +96,21 @@ export default function DashboardClient({ invoices, proposals }: Props) {
             accent
           />
         </div>
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Pending"
             value={`₦${totalPending.toLocaleString()}`}
             sub={`${invoices.filter((i) => i.status === "sent").length} awaiting payment`}
           />
         </div>
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Overdue"
             value={`₦${totalOverdue.toLocaleString()}`}
             sub={`${invoices.filter((i) => i.status === "overdue").length} overdue`}
           />
         </div>
-        <div className="shrink-0 w-[180px] md:w-auto">
+        <div className="shrink-0 w-45 md:w-auto">
           <StatsCard
             title="Proposals won"
             value={`₦${totalProposalValue.toLocaleString()}`}
