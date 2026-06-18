@@ -105,7 +105,7 @@ export default function Sidebar({ user }: SidebarProps) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
                 isActive
                   ? "bg-amber-400/10 text-amber-400"
                   : "text-slate-400 hover:text-white hover:bg-slate-800",
