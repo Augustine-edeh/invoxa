@@ -286,7 +286,10 @@ export default function Sidebar({ user }: SidebarProps) {
           <div className="absolute bottom-16 right-0 space-y-2 flex flex-col items-end">
             <Link
               href="/dashboard/invoice/new"
-              onClick={() => setFabOpen(false)}
+              onClick={() => {
+                setPendingRoute("/dashboard/invoice/new");
+                setFabOpen(false);
+              }}
               className="flex items-center gap-2 bg-slate-800 text-white text-sm text-nowrap font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
             >
               <FileText size={17} className="text-amber-400" />
@@ -294,7 +297,10 @@ export default function Sidebar({ user }: SidebarProps) {
             </Link>
             <Link
               href="/dashboard/proposal/new"
-              onClick={() => setFabOpen(false)}
+              onClick={() => {
+                setPendingRoute("/dashboard/proposal/new");
+                setFabOpen(false);
+              }}
               className="flex items-center gap-2 bg-slate-800 text-white text-sm text-nowrap font-medium px-4 py-2.5 rounded-full shadow-lg border border-slate-700"
             >
               <FilePen size={17} className="text-amber-400" />
@@ -318,11 +324,13 @@ export default function Sidebar({ user }: SidebarProps) {
         <div className="flex items-center justify-around px-2 py-2">
           {bottomNavItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive =
+              pathname === item.href || pendingRoute === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setPendingRoute(item.href)}
                 className={cn(
                   "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition-colors",
                   isActive ? "text-amber-400" : "text-slate-500",
