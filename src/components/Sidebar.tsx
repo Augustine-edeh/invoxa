@@ -16,7 +16,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -74,6 +74,11 @@ export default function Sidebar({ user }: SidebarProps) {
   const router = useRouter();
   const [fabOpen, setFabOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [pendingRoute, setPendingRoute] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPendingRoute(null);
+  }, [pathname]);
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -99,13 +104,14 @@ export default function Sidebar({ user }: SidebarProps) {
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href;
+          const isActive = pathname === item.href || pendingRoute === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setPendingRoute(item.href)}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
                 isActive
                   ? "bg-amber-400/10 text-amber-400"
                   : "text-slate-400 hover:text-white hover:bg-slate-800",
@@ -211,12 +217,16 @@ export default function Sidebar({ user }: SidebarProps) {
             <nav className="flex-1 px-3 py-4 space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = pathname === item.href;
+                const isActive =
+                  pathname === item.href || pendingRoute === item.href;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setDrawerOpen(false)}
+                    onClick={() => {
+                      setPendingRoute(item.href);
+                      setDrawerOpen(false);
+                    }}
                     className={cn(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                       isActive
