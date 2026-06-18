@@ -104,7 +104,11 @@ export default function Sidebar({ user }: SidebarProps) {
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href || pendingRoute === item.href;
+          const isPending = pendingRoute === item.href;
+
+          const isActive = pendingRoute
+            ? pendingRoute === item.href
+            : pathname === item.href;
           return (
             <Link
               key={item.href}
@@ -117,7 +121,10 @@ export default function Sidebar({ user }: SidebarProps) {
                   : "text-slate-400 hover:text-white hover:bg-slate-800",
               )}
             >
-              <Icon size={18} />
+              <Icon
+                size={18}
+                className={isPending ? "animate-pulse" : undefined}
+              />
               {item.label}
             </Link>
           );
@@ -217,8 +224,11 @@ export default function Sidebar({ user }: SidebarProps) {
             <nav className="flex-1 px-3 py-4 space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive =
-                  pathname === item.href || pendingRoute === item.href;
+                const isPending = pendingRoute === item.href;
+
+                const isActive = pendingRoute
+                  ? pendingRoute === item.href
+                  : pathname === item.href;
                 return (
                   <Link
                     key={item.href}
@@ -228,13 +238,16 @@ export default function Sidebar({ user }: SidebarProps) {
                       setDrawerOpen(false);
                     }}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
                       isActive
                         ? "bg-amber-400/10 text-amber-400"
                         : "text-slate-400 hover:text-white hover:bg-slate-800",
                     )}
                   >
-                    <Icon size={18} />
+                    <Icon
+                      size={18}
+                      className={isPending ? "animate-pulse" : undefined}
+                    />
                     {item.label}
                   </Link>
                 );
@@ -321,24 +334,38 @@ export default function Sidebar({ user }: SidebarProps) {
 
       {/* Mobile bottom nav */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900 border-t border-slate-800">
-        <div className="flex items-center justify-around px-2 py-2">
+        <div className="flex items-center justify-around px-2 pb-2">
           {bottomNavItems.map((item) => {
             const Icon = item.icon;
-            const isActive =
-              pathname === item.href || pendingRoute === item.href;
+            const isPending = pendingRoute === item.href;
+
+            const isActive = pendingRoute
+              ? pendingRoute === item.href
+              : pathname === item.href;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setPendingRoute(item.href)}
-                className={cn(
-                  "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition-colors",
-                  isActive ? "text-amber-400" : "text-slate-500",
+              <div className="flex flex-col items-center">
+                {isActive && (
+                  <div className="h-2 w-11/12 rounded-b-full bg-amber-500/70 transition-all" />
                 )}
-              >
-                <Icon size={20} />
-                <span className="text-[10px] font-medium">{item.label}</span>
-              </Link>
+
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setPendingRoute(item.href)}
+                  className={cn(
+                    "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
+                    isActive
+                      ? "bg- amber-400/10 text-amber-400"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800",
+                  )}
+                >
+                  <Icon
+                    size={20}
+                    className={isPending ? "animate-pulse" : undefined}
+                  />
+                  <span className="text-[10px] font-medium">{item.label}</span>
+                </Link>
+              </div>
             );
           })}
         </div>
