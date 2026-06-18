@@ -1,4 +1,4 @@
-export default function Loading() {
+const Loading = () => {
   return (
     <div className="p-6 md:p-8">
       <div className="animate-pulse space-y-4">
@@ -7,4 +7,6 @@ export default function Loading() {
       </div>
     </div>
   );
-}
+};
+
+export default Loading;
