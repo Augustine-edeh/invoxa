@@ -350,7 +350,7 @@ export default function Sidebar({ user }: SidebarProps) {
                 className={cn(
                   "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
                   isActive
-                    ? "bg- amber-400/10 text-amber-400"
+                    ? "bg-amber-400/10 text-amber-400"
                     : "text-slate-400 hover:text-white hover:bg-slate-800",
                 )}
               >
