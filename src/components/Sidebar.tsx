@@ -154,11 +154,11 @@ export default function Sidebar({ user }: SidebarProps) {
           <DropdownMenuContent
             side="top"
             align="start"
-            className="w-56 bg-slate-800 border-slate-700"
+            className="w-58 bg-slate-800 border-slate-700 p-0 border border-slate-800"
           >
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+              className="w-full text-red-300 hover:text-red-400 bg-red-500/10 hover:bg-red-900/20 cursor-pointer"
             >
               <LogOut size={14} className="mr-2" />
               Sign out
@@ -277,11 +277,11 @@ export default function Sidebar({ user }: SidebarProps) {
                 <DropdownMenuContent
                   side="top"
                   align="start"
-                  className="w-56 bg-slate-800 border-slate-700"
+                  className="w-56 bg-slate-800 border-slate-700 p-0 border border-slate-800"
                 >
                   <DropdownMenuItem
                     onClick={handleSignOut}
-                    className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+                    className="w-full text-red-300 hover:text-red-400 bg-red-500/10 hover:bg-red-900/20 cursor-pointer"
                   >
                     <LogOut size={14} className="mr-2" />
                     Sign out
@@ -343,29 +343,23 @@ export default function Sidebar({ user }: SidebarProps) {
               ? pendingRoute === item.href
               : pathname === item.href;
             return (
-              <div className="flex flex-col items-center">
-                {isActive && (
-                  <div className="h-2 w-11/12 rounded-b-full bg-amber-500/70 transition-all" />
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setPendingRoute(item.href)}
+                className={cn(
+                  "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
+                  isActive
+                    ? "bg-amber-400/10 text-amber-400"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800",
                 )}
-
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setPendingRoute(item.href)}
-                  className={cn(
-                    "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
-                    isActive
-                      ? "bg- amber-400/10 text-amber-400"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800",
-                  )}
-                >
-                  <Icon
-                    size={20}
-                    className={isPending ? "animate-pulse" : undefined}
-                  />
-                  <span className="text-[10px] font-medium">{item.label}</span>
-                </Link>
-              </div>
+              >
+                <Icon
+                  size={20}
+                  className={isPending ? "animate-pulse" : undefined}
+                />
+                <span className="text-[10px] font-medium">{item.label}</span>
+              </Link>
             );
           })}
         </div>
