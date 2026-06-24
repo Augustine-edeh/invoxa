@@ -154,11 +154,11 @@ export default function Sidebar({ user }: SidebarProps) {
           <DropdownMenuContent
             side="top"
             align="start"
-            className="w-56 bg-slate-800 border-slate-700"
+            className="w-58 bg-slate-800 border-slate-700 p-0 border border-slate-800"
           >
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+              className="w-full text-red-300 hover:text-red-400 bg-red-500/10 hover:bg-red-900/20 cursor-pointer"
             >
               <LogOut size={14} className="mr-2" />
               Sign out
@@ -277,11 +277,11 @@ export default function Sidebar({ user }: SidebarProps) {
                 <DropdownMenuContent
                   side="top"
                   align="start"
-                  className="w-56 bg-slate-800 border-slate-700"
+                  className="w-56 bg-slate-800 border-slate-700 p-0 border border-slate-800"
                 >
                   <DropdownMenuItem
                     onClick={handleSignOut}
-                    className="w-full text-red-400 hover:text-red-300 hover:bg-slate-700 cursor-pointer"
+                    className="w-full text-red-300 hover:text-red-400 bg-red-500/10 hover:bg-red-900/20 cursor-pointer"
                   >
                     <LogOut size={14} className="mr-2" />
                     Sign out
