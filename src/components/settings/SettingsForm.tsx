@@ -72,7 +72,7 @@ export default function SettingsForm({ profile, userId }: Props) {
           <div className="space-y-2">
             <Label className="text-slate-300">Full name</Label>
             <Input
-              placeholder="Augustine Edeh"
+              placeholder="John Doe"
               value={form.full_name}
               onChange={(e) => setField("full_name", e.target.value)}
               className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600"
@@ -82,7 +82,7 @@ export default function SettingsForm({ profile, userId }: Props) {
             <Label className="text-slate-300">Email address</Label>
             <Input
               type="email"
-              placeholder="info.augustinesedeh@gmail.com"
+              placeholder="john@acmecreative.com"
               value={form.email}
               onChange={(e) => setField("email", e.target.value)}
               className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600"
@@ -92,7 +92,7 @@ export default function SettingsForm({ profile, userId }: Props) {
         <div className="space-y-2">
           <Label className="text-slate-300">Phone number</Label>
           <Input
-            placeholder="+234 907 666 5289"
+            placeholder="+234 801 234 5678"
             value={form.phone}
             onChange={(e) => setField("phone", e.target.value)}
             className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600"
@@ -108,7 +108,7 @@ export default function SettingsForm({ profile, userId }: Props) {
         <div className="space-y-2">
           <Label className="text-slate-300">Business name (optional)</Label>
           <Input
-            placeholder="Augustine Edeh Studios"
+            placeholder="Acme Creative Solutions"
             value={form.business_name}
             onChange={(e) => setField("business_name", e.target.value)}
             className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600"
@@ -126,7 +126,7 @@ export default function SettingsForm({ profile, userId }: Props) {
         <div className="space-y-2">
           <Label className="text-slate-300">Website (optional)</Label>
           <Input
-            placeholder="https://augustines.vercel.app"
+            placeholder="www.acmecreative.com"
             value={form.website}
             onChange={(e) => setField("website", e.target.value)}
             className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600"
@@ -143,13 +143,13 @@ export default function SettingsForm({ profile, userId }: Props) {
         </h3>
         <div className="bg-slate-800/50 rounded-lg p-4 space-y-1 border border-slate-700">
           <p className="text-white font-semibold text-sm">
-            {form.full_name || "Your name"}
+            {form.full_name || "John Doe"}
           </p>
           {form.business_name && (
             <p className="text-slate-400 text-xs">{form.business_name}</p>
           )}
           <p className="text-slate-400 text-xs">
-            {form.email || "your@email.com"}
+            {form.email || "john@acmecreative.com"}
           </p>
           {form.phone && <p className="text-slate-400 text-xs">{form.phone}</p>}
           {form.address && (
