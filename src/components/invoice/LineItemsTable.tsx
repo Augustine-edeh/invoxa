@@ -13,16 +13,6 @@ export default function LineItemsTable() {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium text-slate-300">Line items</h3>
-        <Button
-          type="button"
-          size="sm"
-          onClick={addLineItem}
-          variant="outline"
-          className="bg-slate-700 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-xs"
-        >
-          <Plus size={14} className="mr-1" />
-          Add item
-        </Button>
       </div>
 
       {form.line_items.length === 0 ? (
@@ -30,12 +20,14 @@ export default function LineItemsTable() {
           onClick={addLineItem}
           className="border border-dashed border-slate-700 rounded-lg p-6 text-center cursor-pointer hover:border-amber-400/50 transition-colors"
         >
+          <Plus size={16} className="mx-auto mb-2 text-slate-500" />
+
           <p className="text-slate-500 text-sm">
             Click to add your first line item
           </p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {/* Header */}
           <div className="grid grid-cols-12 gap-2 px-1">
             <p className="col-span-5 text-xs text-slate-500">Description</p>
@@ -47,57 +39,80 @@ export default function LineItemsTable() {
           </div>
 
           {/* Rows */}
-          {form.line_items.map((item) => (
-            <div
-              key={item.id}
-              className="grid grid-cols-12 gap-2 items-center group"
-            >
-              <div className="col-span-5">
-                <Input
-                  placeholder="Service description"
-                  value={item.description}
-                  onChange={(e) =>
-                    updateLineItem(item.id, "description", e.target.value)
-                  }
-                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600 text-sm h-9"
-                />
+          <div className="space-y-2">
+            {form.line_items.map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-12 gap-2 items-center group"
+              >
+                <div className="col-span-5">
+                  <Input
+                    placeholder="Service description"
+                    value={item.description}
+                    onChange={(e) =>
+                      updateLineItem(item.id, "description", e.target.value)
+                    }
+                    className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-600 text-sm h-9"
+                  />
+                </div>
+
+                <div className="col-span-2">
+                  <Input
+                    type="number"
+                    min={1}
+                    value={item.quantity}
+                    onChange={(e) =>
+                      updateLineItem(
+                        item.id,
+                        "quantity",
+                        Number(e.target.value),
+                      )
+                    }
+                    className="bg-slate-800 border-slate-700 text-white text-sm h-9"
+                  />
+                </div>
+
+                <div className="col-span-3">
+                  <Input
+                    type="number"
+                    min={0}
+                    value={item.rate}
+                    onChange={(e) =>
+                      updateLineItem(item.id, "rate", Number(e.target.value))
+                    }
+                    className="bg-slate-800 border-slate-700 text-white text-sm h-9"
+                  />
+                </div>
+
+                <div className="col-span-2 flex items-center justify-end gap-1">
+                  <span className="text-slate-300 text-sm font-medium">
+                    ₦{(item.quantity * item.rate).toLocaleString()}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => removeLineItem(item.id)}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-600 hover:text-red-400 ml-1"
+                    aria-label="Remove line item"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
               </div>
-              <div className="col-span-2">
-                <Input
-                  type="number"
-                  min={1}
-                  value={item.quantity}
-                  onChange={(e) =>
-                    updateLineItem(item.id, "quantity", Number(e.target.value))
-                  }
-                  className="bg-slate-800 border-slate-700 text-white text-sm h-9"
-                />
-              </div>
-              <div className="col-span-3">
-                <Input
-                  type="number"
-                  min={0}
-                  value={item.rate}
-                  onChange={(e) =>
-                    updateLineItem(item.id, "rate", Number(e.target.value))
-                  }
-                  className="bg-slate-800 border-slate-700 text-white text-sm h-9"
-                />
-              </div>
-              <div className="col-span-2 flex items-center justify-end gap-1">
-                <span className="text-slate-300 text-sm font-medium">
-                  ₦{(item.quantity * item.rate).toLocaleString()}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => removeLineItem(item.id)}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-600 hover:text-red-400 ml-1"
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Add another item */}
+          <Button
+            type="button"
+            size="sm"
+            onClick={addLineItem}
+            variant="outline"
+            className="w-full border-dashed bg-transparent border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800 hover:border-amber-400/50 text-xs"
+          >
+            <Plus size={14} className="mr-1" />
+            Add item
+          </Button>
         </div>
       )}
     </div>
