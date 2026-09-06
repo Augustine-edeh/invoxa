@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import Link from "next/link";
 import { FileText, ChevronRight } from "lucide-react";
+import { clsx } from "clsx";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-slate-700 text-slate-300 hover:bg-slate-700",
@@ -64,27 +65,36 @@ export default function InvoiceTable({ invoices }: Props) {
             {invoices.map((invoice) => (
               <tr
                 key={invoice.id}
-                className="hover:bg-slate-800/30 transition-colors group"
+                className="group relative hover:bg-slate-800/30 transition-color cursor-pointer"
               >
                 <td className="py-3 pr-4">
                   <Link
                     href={`/dashboard/invoice/${invoice.id}`}
-                    className="text-white font-medium group-hover:text-amber-400 transition-colors"
-                  >
+                    className="absolute inset-0"
+                    aria-label={`View invoice #${invoice.invoice_number}`}
+                  />
+
+                  <span className="relative text-white font-medium group-hover:text-amber-400 transition-colors">
                     #{invoice.invoice_number}
-                  </Link>
+                  </span>
                 </td>
-                <td className="py-3 pr-4 text-slate-300">
+
+                <td className="relative py-3 pr-4 text-slate-300">
                   {invoice.client_name}
                 </td>
-                <td className="py-3 pr-4 text-slate-400">
+
+                <td className="relative py-3 pr-4 text-slate-400">
                   {format(new Date(invoice.due_date), "MMM d, yyyy")}
                 </td>
-                <td className="py-3 pr-4 text-right text-white font-medium">
+
+                <td className="relative py-3 pr-4 text-right text-white font-medium">
                   ₦{invoice.total.toLocaleString()}
                 </td>
-                <td className="py-3">
-                  <Badge className={statusStyles[invoice.status]}>
+
+                <td className="relative py-3">
+                  <Badge
+                    className={clsx("capitalize", statusStyles[invoice.status])}
+                  >
                     {invoice.status}
                   </Badge>
                 </td>
