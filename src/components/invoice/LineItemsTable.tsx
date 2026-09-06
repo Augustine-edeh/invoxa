@@ -20,9 +20,9 @@ export default function LineItemsTable() {
           onClick={addLineItem}
           className="border border-dashed border-slate-700 rounded-lg p-6 text-center cursor-pointer hover:border-amber-400/50 transition-colors"
         >
-          <Plus size={16} className="mx-auto mb-2 text-slate-500" />
+          <Plus size={16} className="mx-auto mb-2 text-orange-400 slate-500" />
 
-          <p className="text-slate-400 text-sm">
+          <p className="text-red-500 slate-400 text-sm">
             Click to add your first line item
           </p>
         </div>
