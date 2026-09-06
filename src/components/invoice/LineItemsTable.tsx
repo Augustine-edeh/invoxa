@@ -22,7 +22,7 @@ export default function LineItemsTable() {
         >
           <Plus size={16} className="mx-auto mb-2 text-slate-500" />
 
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-400 text-sm">
             Click to add your first line item
           </p>
         </div>
