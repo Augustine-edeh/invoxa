@@ -111,7 +111,7 @@ export default function LineItemsTable() {
             className="w-full border-dashed bg-transparent border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800 hover:border-amber-400/50 text-xs"
           >
             <Plus size={14} className="mr-1" />
-            #@Add items
+            Add item
           </Button>
         </div>
       )}
